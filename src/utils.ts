@@ -1,9 +1,12 @@
 import chalk from "chalk";
+import { dirname } from "path";
 import yargs from "yargs";
 import { Config, ConfigWithOut } from "./Config";
 import { calculateOutput as calculateOutputISOFileName, makeISO } from "./iso";
 import { rm } from "./paths";
 import { Type } from "./type";
+
+const { constants, promises: { access } } = require("fs");
 
 export function processParams() {
   // eslint-disable-next-line global-require
@@ -98,3 +101,16 @@ export {
 export {
   cmd, forceSudo,
 } from "./cmd";
+
+export async function getPkgJsonDir() {
+  for (const path of module.paths) {
+    const prospectivePkgJsonDir = dirname(path);
+
+    // eslint-disable-next-line no-await-in-loop
+    await access(path, constants.F_OK);
+
+    return prospectivePkgJsonDir;
+  }
+
+  throw new Error();
+}
