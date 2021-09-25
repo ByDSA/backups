@@ -1,0 +1,66 @@
+{
+  "name": "backups",
+  "version": "1.0.0",
+  "description": "",
+  "bin": "dist/index",
+  "scripts": {
+    "start": "ts-node index",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prebuild:bin": "npm run build:clean && npm rebuild && npm test",
+    "build:bin": "tsc",
+    "postbuild:bin": "cp src/index dist/index && npm run build:bin:link",
+    "build:bin:link": "sudo rm -f /bin/backup && sudo ln -s \"$(pwd)/dist/index\" /bin/backup",
+    "build:clean": "rm -rf dist",
+    "docs": "npm run lint:fix && npm run docs:clean && typedoc",
+    "postdocs": ".scripts/docs-footer.sh",
+    "docs:clean": ".scripts/docs-clean.sh",
+    "docs:push": ".scripts/docs-push.sh",
+    "lint:eslint": "eslint ./src/*.ts index.ts",
+    "lint:fix": "eslint ./src/*.ts index.ts --fix",
+    "release": "standard-version",
+    "release:push": "git push && git push --tags && npm run docs:push",
+    "readme": "npm run readme:clean && npx readme-md-generator -p .readme/template.md -y",
+    "readme:clean": "rm -f README.md"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/node": "^16.9.6",
+    "@commitlint/cli": "^12.0.1",
+    "@commitlint/config-conventional": "^12.0.1",
+    "@types/jest": "^26.0.20",
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.2",
+    "husky": "^6.0.0",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.4.2",
+    "standard-version": "^9.1.1",
+    "ts-jest": "^26.5.4",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3",
+    "@types/yargs": "^17.0.3"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "yargs": "^17.2.0"
+  },
+  "lint-staged": {
+    "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
+      "eslint --fix"
+    ]
+  },
+  "standard-version": {
+    "scripts": {
+      "postcommit": "npm run docs && npm run release:push"
+    }
+  }
+}

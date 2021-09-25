@@ -1,0 +1,1 @@
+{"version":3,"file":"Config.js","sourceRoot":"","sources":["../src/Config.ts"],"names":[],"mappings":"","sourcesContent":["import { Type } from \"./type\";\n\nexport type Config = {\n  input: string;\n    out?: string;\n    force: boolean;\n    checkAfter: boolean;\n    deleteAfter: boolean;\n    type: Type;\n};\n\nexport type ConfigWithOut = Config & {\n    out: string;\n};\n"]}
