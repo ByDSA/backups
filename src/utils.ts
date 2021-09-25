@@ -104,12 +104,15 @@ export {
 
 export async function getPkgJsonDir() {
   for (const path of module.paths) {
-    const prospectivePkgJsonDir = dirname(path);
+    try {
+      const prospectivePkgJsonDir = dirname(path);
 
-    // eslint-disable-next-line no-await-in-loop
-    await access(path, constants.F_OK);
+      // eslint-disable-next-line no-await-in-loop
+      await access(path, constants.F_OK);
 
-    return prospectivePkgJsonDir;
+      return prospectivePkgJsonDir;
+    // eslint-disable-next-line no-empty
+    } catch (e) {}
   }
 
   throw new Error();
