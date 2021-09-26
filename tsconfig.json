@@ -1,40 +1,44 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "strict": true,
+    "noImplicitAny": false,
     "declaration": true,
     "outDir": "./dist",
     "sourceMap": true,
     "inlineSources": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "esnext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "importHelpers": true,
-    "target": "esnext",
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/*"],
+      "@tests/*": ["tests/*"],
+      "@mocks/*" : ["tests/mocks/*"],
+    }
   },
   "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules",
-    "**/*.spec.ts"
-  ],
-  "filesGlob": [
-    "src/**/*.ts"
+    "src/**/*.ts", "tests/**/*.ts",
   ],
   "types": [
     "node"
   ],
   "typeRoots": [
     "../node_modules/@types"
-  ]
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
 }

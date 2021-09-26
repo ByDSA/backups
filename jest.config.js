@@ -1,5 +1,8 @@
 module.exports = {
-  moduleDirectories: ["node_modules"],
+  moduleDirectories: [
+    "node_modules",
+    "src",
+  ],
   roots: ["<rootDir>/src", "<rootDir>/tests"],
   transform: {
     "^.+\\.tsx?$": "ts-jest",
@@ -12,12 +15,9 @@ module.exports = {
       isolatedModules: false,
     },
   },
-  coverageThreshold: {
-    global: {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
-    },
+  moduleNameMapper: {
+    "^@app/(.*)$": "<rootDir>/src/$1",
+    "^@tests/(.*)$": "<rootDir>/tests/$1",
+    "^@mocks/(.*)$": "<rootDir>/tests/mocks/$1",
   },
 };

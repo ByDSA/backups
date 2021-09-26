@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "bin": "dist/index",
+  "main": "dist/index",
   "scripts": {
     "start": "([ -d dist ] || npm run build:bin) && dist/index",
     "test": "jest",
@@ -17,15 +18,15 @@
     "postdocs": ".scripts/docs-footer.sh",
     "docs:clean": ".scripts/docs-clean.sh",
     "docs:push": ".scripts/docs-push.sh",
-    "lint:eslint": "eslint ./src/*.ts index.ts",
-    "lint:fix": "eslint ./src/*.ts index.ts --fix",
+    "lint:eslint": "eslint ./src/*.ts ./tests/*.ts src/index",
+    "lint:fix": "eslint ./src/*.ts ./tests/*.ts src/index --fix",
     "release": "standard-version",
     "release:push": "git push && git push --tags && npm run docs:push",
     "readme": "npm run readme:clean && npx readme-md-generator -p .readme/template.md -y",
     "readme:clean": "rm -f README.md"
   },
   "keywords": [],
-  "author": "",
+  "author": "Daniel Sales Álvarez",
   "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
@@ -38,19 +39,22 @@
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jest": "^24.3.2",
     "husky": "^6.0.0",
     "jest": "^27.2.2",
     "lint-staged": "^10.4.2",
     "standard-version": "^9.1.1",
     "ts-jest": "^27.0.5",
-    "tslib": "^2.1.0",
-    "typescript": "^4.2.3"
+    "ts-node": "^10.0.0",
+    "tslib": "^2.2.0",
+    "typescript": "^4.3.4"
   },
   "dependencies": {
     "chalk": "^4.1.2",
+    "module-alias": "^2.2.2",
     "sha256-file": "^1.0.0",
     "utimes": "^4.1.1",
     "yargs": "^17.2.0"
@@ -64,5 +68,10 @@
     "scripts": {
       "postcommit": "npm run docs && npm run release:push"
     }
+  },
+  "_moduleAliases": {
+    "@app": "dist/src",
+    "@tests": "dist/tests",
+    "@mocks": "dist/tests/mocks"
   }
 }

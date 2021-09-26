@@ -1,21 +1,18 @@
-import path from "path";
-import FilesMock from "../../tests/FilesMock";
-import genMock1 from "../../tests/Mock1";
-import { getPkgJsonDir } from "../utils";
+import { Tree } from "@app/tree/Tree";
+import mockGen from "@mocks/files1";
+import FilesMock from "@tests/FilesMock";
+import { treeDir } from "@tests/settings";
 import { findTree } from "./findTree";
-import { Tree } from "./Tree";
 
 describe("all", () => {
   let DIR_TREE_BASE: string;
   let mock1: FilesMock;
 
   beforeAll(async () => {
-    const DIR_BASE = await getPkgJsonDir();
-
-    DIR_TREE_BASE = path.resolve(DIR_BASE, "tests/tree");
+    DIR_TREE_BASE = await treeDir();
     Object.freeze(DIR_TREE_BASE);
 
-    mock1 = await genMock1(DIR_TREE_BASE).create();
+    mock1 = await mockGen(DIR_TREE_BASE).create();
   } );
 
   afterAll(async () => {

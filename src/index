@@ -1,5 +1,6 @@
 #!/bin/node
 
+require("module-alias/register");
 const chalk = require("chalk");
 const { calculateOutputFileName, checkAfter, deleteBaseSource, forceSudo, makeBackup, processParams, removePreviousIfNeeded } = require("./utils");
 
