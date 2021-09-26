@@ -1,6 +1,6 @@
 module.exports = {
-  moduleDirectories: ["node_modules", "src"],
-  roots: ["<rootDir>/src"],
+  moduleDirectories: ["node_modules"],
+  roots: ["<rootDir>/src", "<rootDir>/tests"],
   transform: {
     "^.+\\.tsx?$": "ts-jest",
     "^.+\\.jsx?$": require.resolve("babel-jest"),

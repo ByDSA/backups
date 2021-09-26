@@ -1,8 +1,9 @@
 export type Tree = {
-  path: string;
+  name: string;
   size: number;
   hash: string;
   modificatedAt: number;
   createdAt: number;
+  accessedAt?: number;
   children?: Tree[];
 };
