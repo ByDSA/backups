@@ -47,7 +47,7 @@ export default class FilesMock {
       recursive: true,
     } );
 
-    const folders = [];
+    const folders: FileNode[] = [];
 
     for (const f of files) {
       const fullPath = `${basePath}/${f.path}`;

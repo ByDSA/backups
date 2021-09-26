@@ -1,5 +1,5 @@
 node_modules/
-coverage/
-docs/
+/coverage/
+/docs/
 .env
 /dist/

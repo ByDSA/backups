@@ -1,6 +1,6 @@
 {
     "entryPoints": [
-        "./src/index.ts"
+        "./src/index"
     ],
     "out": "docs",
     "readme": "none",
