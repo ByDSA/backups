@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { existsSync, lstatSync } from "fs";
+import { basename, dirname } from "path";
 import { cmd } from "./cmd";
-import { basename, dirname } from "./paths";
 import { getDateTimestamp } from "./timestamp";
 
 export function makeISO(inputFolder: string, outputISO: string) {
@@ -15,7 +15,7 @@ export function makeISO(inputFolder: string, outputISO: string) {
   }
 }
 
-type Params = { input: string; out: string };
+type Params = { input: string; out?: string };
 export function calculateOutput( { input, out }: Params) {
   const TIMESTAMP = getDateTimestamp();
   let OUT_FOLDER: string = "";

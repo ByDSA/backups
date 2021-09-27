@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { Dirent, lstatSync, readdirSync } from "fs";
 import { basename, resolve } from "path";
 import sha256File from "sha256-file";
-import { Tree } from "./Tree";
+import Tree from "./Tree";
 
 function checkFolderIsValid(folder: string) {
   let stat;

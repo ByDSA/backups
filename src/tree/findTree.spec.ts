@@ -1,4 +1,4 @@
-import { Tree } from "@app/tree/Tree";
+import Tree from "@app/tree/Tree";
 import mockGen from "@mocks/files1";
 import FilesMock from "@tests/FilesMock";
 import { treeDir } from "@tests/settings";

@@ -1,4 +1,4 @@
-export type Tree = {
+type Tree = {
   name: string;
   size: number;
   hash: string;
@@ -7,3 +7,5 @@ export type Tree = {
   accessedAt?: number;
   children?: Tree[];
 };
+
+export default Tree;
