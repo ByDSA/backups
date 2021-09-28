@@ -36,6 +36,10 @@ export default function findDuplicates(t: Tree, opts?: Options): Set<PlainTree>[
   const duplicates: Set<PlainTree>[] = [];
 
   for (const node of plainTree) {
+    if (isIgnored(node, opts))
+      // eslint-disable-next-line no-continue
+      continue;
+
     const id = idGen(node, finalOpts);
     const checkedWithThisHash = checked[id];
 
@@ -55,6 +59,13 @@ export default function findDuplicates(t: Tree, opts?: Options): Set<PlainTree>[
   }
 
   return duplicates;
+}
+
+function isIgnored(node: Tree, opts?: Options): boolean {
+  if (!opts?.consider?.empty && node.size === 0)
+    return true;
+
+  return false;
 }
 
 function idGen(node: Tree, opts?: Options) {
