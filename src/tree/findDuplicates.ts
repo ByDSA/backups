@@ -26,7 +26,7 @@ const DefaultOptions: Options = {
   deep: false,
 };
 
-export default function searchDuplicates(t: Tree, opts?: Options): Set<PlainTree>[] {
+export default function findDuplicates(t: Tree, opts?: Options): Set<PlainTree>[] {
   const finalOpts = {
     ...DefaultOptions,
     ...opts,

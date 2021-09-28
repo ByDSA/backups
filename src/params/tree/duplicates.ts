@@ -1,5 +1,5 @@
 import { readTree } from "@app/tree";
-import searchDuplicates from "@app/tree/searchDuplicates";
+import findDuplicates from "@app/tree/findDuplicates";
 import chalk from "chalk";
 import yargs, { Arguments } from "yargs";
 
@@ -42,7 +42,7 @@ function handler<U>(argv: Arguments<U>) {
       },
       deep: config.deep,
     };
-    const sets = searchDuplicates(tree, opts);
+    const sets = findDuplicates(tree, opts);
     let i = 1;
 
     for (const s of sets) {
