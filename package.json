@@ -51,8 +51,10 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
+    "deasync": "^0.1.23",
     "module-alias": "^2.2.2",
     "sha256-file": "^1.0.0",
+    "synchronized-promise": "^0.3.1",
     "utimes": "^4.1.1",
     "yargs": "^17.2.0"
   },

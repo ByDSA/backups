@@ -1,17 +1,17 @@
 import mockGen from "@mocks/files1";
 import FilesMock from "@tests/FilesMock";
-import { treeDir } from "@tests/settings";
+import { treeDir } from "@tests/index";
 import path from "path";
 import { readTree } from ".";
-import isTreeEqual from "./compareTree";
-import exportTree from "./exportTree";
+import isTreeEqual from "./compare";
 import { findTree } from "./findTree";
+import generateTree from "./generate";
 
 describe("all", () => {
   let mock1: FilesMock;
 
   beforeAll(async () => {
-    const basePath = await treeDir();
+    const basePath = treeDir();
 
     mock1 = await mockGen(basePath).create();
   } );
@@ -21,11 +21,11 @@ describe("all", () => {
   } );
 
   it("exportTree", async () => {
-    const basePath = await treeDir();
+    const basePath = treeDir();
     const expected = await findTree(basePath);
     const out = path.resolve(basePath, "test.tree");
 
-    await exportTree( {
+    await generateTree( {
       out,
       folder: basePath,
     } );

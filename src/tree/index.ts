@@ -1,10 +1,10 @@
 export {
   default as isTreeEqual,
-} from "./compareTree";
+} from "./compare";
 
 export {
   default as exportTree,
-} from "./exportTree";
+} from "./generate";
 
 export {
   default as isTree,
@@ -12,7 +12,11 @@ export {
 
 export {
   default as readTree,
-} from "./readTree";
+} from "./read";
+
+export {
+  default as saveTree,
+} from "./save";
 
 export {
   default as Tree,

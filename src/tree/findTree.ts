@@ -1,7 +1,10 @@
-import crypto from "crypto";
+import { rm } from "@app/files";
+import { hashFileStream } from "@app/files/hash";
+import { mountISO, umountISO } from "@app/iso";
 import { Dirent, lstatSync, readdirSync } from "fs";
 import { basename, resolve } from "path";
 import sha256File from "sha256-file";
+import { calculateHashOfBranches, calculateSizeOfBranches } from "./branches";
 import Tree from "./Tree";
 
 function checkFolderIsValid(folder: string) {
@@ -21,12 +24,12 @@ function checkFolderIsValid(folder: string) {
   if (!stat)
     throw new Error("Unexpected error");
 
-  if (!stat.isDirectory())
-    throw new Error(`Path ${folder} is not a directory`);
+  if (!(stat.isFile() && isISO(folder)) && !stat.isDirectory())
+    throw new Error(`Path ${folder} is not a valid directory`);
 }
 
-function dirent2Tree(folder: string): (d: Dirent)=> Tree {
-  return (d: Dirent) => {
+function dirent2Tree(folder: string): (d: Dirent)=> Promise<Tree> {
+  return async (d: Dirent) => {
     const fullpath = resolve(folder, d.name);
     const stats = lstatSync(fullpath);
     const baseNode = {
@@ -37,18 +40,30 @@ function dirent2Tree(folder: string): (d: Dirent)=> Tree {
     };
 
     if (d.isFile()) {
-      const hash = sha256File(fullpath);
+      console.log(`Reading file ${fullpath} ...`);
+      const hash = await calcHashFromFile(fullpath);
+      let children;
+
+      if (d.name.endsWith(".iso")) {
+        const isoTree = await findTree(fullpath);
+
+        children = isoTree.children;
+      }
+
       const ret: Tree = {
         ...baseNode,
         size: stats.size,
         hash,
+        children,
       };
 
       return ret;
     }
 
     if (d.isDirectory()) {
-      const subBranches = getBranchesFrom(fullpath);
+      const subBranches = await getBranchesFrom(fullpath);
+
+      console.log(`Reading folder ${fullpath} ...`);
       const size = calculateSizeOfBranches(subBranches);
       const hash = calculateHashOfBranches(subBranches);
       const ret: Tree = {
@@ -65,55 +80,56 @@ function dirent2Tree(folder: string): (d: Dirent)=> Tree {
   };
 }
 
-function calculateSizeOfBranches(branches: Tree[]) {
-  let size = 0;
-
-  branches.forEach((n) => {
-    size += n.size;
-  } );
-
-  return size;
-}
-
-function createSha256CspHash(content: string) {
-  return crypto
-    .createHash("sha256")
-    .update(content)
-    .digest("hex");
-}
-
-function calculateHashOfBranches(branches: Tree[]) {
-  const joinedHashes = branches
-    .map((n) => n.hash)
-    .sort()
-    .join();
-
-  return createSha256CspHash(joinedHashes);
-}
-
-function getBranchesFrom(folder: string): Tree[] {
+// eslint-disable-next-line require-await
+async function getBranchesFrom(folder: string): Promise<Tree[]> {
   const content = readdirSync(folder, {
     withFileTypes: true,
   } );
-  const branches = content.map(dirent2Tree(folder));
+  const branches: Tree[] = [];
 
-  return branches;
+  for (const d of content) {
+    // eslint-disable-next-line no-await-in-loop
+    const b = await dirent2Tree(folder)(d);
+
+    branches.push(b);
+  }
+
+  return Promise.all(branches);
 }
 
-// eslint-disable-next-line require-await
-export async function findTree(folder: string): Promise<Tree> {
+function isISO(folder: string) {
+  return folder.endsWith(".iso");
+}
+
+type Options = {
+  superNodeName: string;
+};
+
+export async function findTree(folder: string, opts?: Options): Promise<Tree> {
   const createdAt = Date.now();
 
   checkFolderIsValid(folder);
 
-  const branches = getBranchesFrom(folder);
+  let isMountedTmpFolder = false;
+
+  if (isISO(folder)) {
+    folder = mountISO(folder); // eslint-disable-line no-param-reassign
+    isMountedTmpFolder = true;
+  }
+
+  const branches = await getBranchesFrom(folder);
   const hash = calculateHashOfBranches(branches);
   const size = calculateSizeOfBranches(branches);
+
+  if (isMountedTmpFolder) {
+    umountISO(folder);
+    rm(folder);
+  }
 
   return {
     hash,
     size,
-    name: basename(folder),
+    name: opts?.superNodeName || basename(folder),
     modificatedAt: Date.now(),
     accessedAt: Date.now(),
     createdAt,
@@ -121,6 +137,11 @@ export async function findTree(folder: string): Promise<Tree> {
   };
 }
 
-export function calcHashFromFile(filepath: string) {
-  return sha256File(filepath);
+export async function calcHashFromFile(filepath: string) {
+  try {
+    return sha256File(filepath);
+  } catch (e) {
+    // eslint-disable-next-line no-return-await
+    return await hashFileStream(filepath);
+  }
 }

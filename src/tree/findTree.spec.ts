@@ -1,7 +1,7 @@
 import Tree from "@app/tree/Tree";
 import mockGen from "@mocks/files1";
 import FilesMock from "@tests/FilesMock";
-import { treeDir } from "@tests/settings";
+import { treeDir } from "@tests/index";
 import { findTree } from "./findTree";
 
 describe("all", () => {
@@ -9,7 +9,7 @@ describe("all", () => {
   let mock1: FilesMock;
 
   beforeAll(async () => {
-    DIR_TREE_BASE = await treeDir();
+    DIR_TREE_BASE = treeDir();
     Object.freeze(DIR_TREE_BASE);
 
     mock1 = await mockGen(DIR_TREE_BASE).create();

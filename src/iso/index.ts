@@ -1,19 +1,6 @@
-import chalk from "chalk";
 import { existsSync, lstatSync } from "fs";
 import { basename, dirname } from "path";
-import { cmd } from "./cmd";
-import { getDateTimestamp } from "./timestamp";
-
-export function makeISO(inputFolder: string, outputISO: string) {
-  console.log(chalk.blue(`Creating ISO '${outputISO}'...`));
-
-  cmd(`mkisofs -allow-limited-size -iso-level 4 -J -joliet-long -l -R -o "${outputISO}" "${inputFolder}"`);
-
-  if (!existsSync(outputISO)) {
-    console.log(chalk.red(`ISO not exists! ${outputISO}`));
-    process.exit(1);
-  }
-}
+import { getDateTimestamp } from "../timestamp";
 
 type Params = { input: string; out?: string };
 export function calculateOutput( { input, out }: Params) {
@@ -30,3 +17,16 @@ export function calculateOutput( { input, out }: Params) {
 
   return `${OUT_FOLDER}/${basename(input)} [${TIMESTAMP}].iso`;
 }
+
+export {
+  default as checkIntegrityISO,
+} from "./integrity";
+
+export {
+  default as makeISO,
+} from "./make";
+
+export {
+  default as mountISO,
+  umount as umountISO,
+} from "./mount";

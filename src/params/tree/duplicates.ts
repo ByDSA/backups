@@ -45,6 +45,8 @@ function handler<U>(argv: Arguments<U>) {
     const sets = findDuplicates(tree, opts);
     let i = 1;
 
+    console.log(`Found ${sets.length} duplicated groups.`);
+
     for (const s of sets) {
       if (s) {
         console.log(`[Group ${i}]`);

@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { Config, ConfigWithOut } from "./Config";
+import { rm } from "./files";
 import { calculateOutput as calculateOutputISOFileName, makeISO } from "./iso";
-import { rm } from "./paths";
 import { Type } from "./type";
 
 export function calculateOutputFileName( { out, input, type }: ConfigWithOut) {
