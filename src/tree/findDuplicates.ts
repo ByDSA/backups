@@ -1,4 +1,4 @@
-import { plain, PlainTree } from "./plain";
+import { flatten, FlatTree } from "./flat";
 import Tree from "./Tree";
 
 type Options = {
@@ -26,16 +26,16 @@ const DefaultOptions: Options = {
   deep: false,
 };
 
-export default function findDuplicates(t: Tree, opts?: Options): Set<PlainTree>[] {
+export default function findDuplicates(t: Tree, opts?: Options): Set<FlatTree>[] {
   const finalOpts = {
     ...DefaultOptions,
     ...opts,
   };
-  const plainTree = plain(t);
-  const checked: PlainTree[] = [];
-  const duplicates: Set<PlainTree>[] = [];
+  const flatTree = flatten(t);
+  const checked: FlatTree[] = [];
+  const duplicates: Set<FlatTree>[] = [];
 
-  for (const node of plainTree) {
+  for (const node of flatTree) {
     if (isIgnored(node, opts))
       // eslint-disable-next-line no-continue
       continue;
@@ -48,7 +48,7 @@ export default function findDuplicates(t: Tree, opts?: Options): Set<PlainTree>[
       const existsDuplicatesSet = duplicatesSet !== undefined;
 
       if (!existsDuplicatesSet) {
-        duplicatesSet = new Set<PlainTree>();
+        duplicatesSet = new Set<FlatTree>();
         duplicates[id] = duplicatesSet;
         duplicatesSet.add(checkedWithThisHash);
       }

@@ -1,4 +1,4 @@
-import { plainPathsMap } from "../plain";
+import { flattenPathsMap } from "../flat";
 import Tree from "../Tree";
 import Difference from "./Difference";
 
@@ -15,13 +15,13 @@ export default function compareTree(t1: Tree, t2: Tree, opts?: Options): Differe
     ...opts,
   };
   const differences: Difference[] = [];
-  const plainPathMap1 = plainPathsMap(t1);
-  const plainPathMap2 = plainPathsMap(t2);
+  const flatPathMap1 = flattenPathsMap(t1);
+  const flatPathMap2 = flattenPathsMap(t2);
 
-  for (const pair of plainPathMap1) {
+  for (const pair of flatPathMap1) {
     const path = pair[0];
 
-    if (!plainPathMap2.has(path)) { // Deleted, moved or renamed
+    if (!flatPathMap2.has(path)) { // Deleted, moved or renamed
       differences.push( {
         type: "deleted",
         from: path,

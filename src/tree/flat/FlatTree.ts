@@ -1,7 +1,7 @@
 import { TreeWithoutChildren } from "../Tree";
 
-type PlainTree = TreeWithoutChildren & {
+type FlatTree = TreeWithoutChildren & {
   path: string;
 };
 
-export default PlainTree;
+export default FlatTree;
