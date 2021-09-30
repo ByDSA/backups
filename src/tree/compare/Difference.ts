@@ -17,6 +17,8 @@ type Difference = From & {
   type: "deleted";
 } | FromTo & {
   type: "moved";
+} | FromTo & {
+  type: "renamed";
 } | To & Treeable & {
   type: "created";
 } | To & Treeable & {
