@@ -70,7 +70,6 @@
   },
   "_moduleAliases": {
     "@app": "dist/src",
-    "@tests": "dist/tests",
-    "@mocks": "dist/tests/mocks"
+    "@tests": "dist/tests"
   }
 }

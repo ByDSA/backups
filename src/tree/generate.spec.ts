@@ -1,6 +1,6 @@
-import mockGen from "@mocks/files1";
 import FilesMock from "@tests/FilesMock";
 import { treeDir } from "@tests/index";
+import mockGen from "@tests/trees/mocks/files1";
 import path from "path";
 import { readTree } from ".";
 import { isEqual } from "./compare";

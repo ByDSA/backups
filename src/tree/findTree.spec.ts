@@ -1,6 +1,6 @@
-import mockGen from "@mocks/files1";
 import FilesMock from "@tests/FilesMock";
 import { treeDir } from "@tests/index";
+import { genFileMock1 } from "@tests/trees";
 import findTreeAsync from "./findTree";
 import Tree from "./Tree";
 
@@ -12,7 +12,7 @@ describe("all", () => {
     DIR_TREE_BASE = treeDir();
     Object.freeze(DIR_TREE_BASE);
 
-    mock1 = await mockGen(DIR_TREE_BASE).create();
+    mock1 = await genFileMock1(DIR_TREE_BASE).create();
   } );
 
   afterAll(async () => {

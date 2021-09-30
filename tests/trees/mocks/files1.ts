@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import FileNode from "@tests/FileNode";
-import Mock from "../FilesMock";
+import Mock from "../../FilesMock";
 
 const files: FileNode[] = [
   {

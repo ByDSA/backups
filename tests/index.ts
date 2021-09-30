@@ -9,7 +9,7 @@ export function treeDir() {
 export function testsTmpDir() {
   const DIR_BASE = getMainDir();
 
-  return path.resolve(DIR_BASE, "tests", "tmp");
+  return path.resolve(DIR_BASE, "tmp");
 }
 
 export function mkTmpDir() {
@@ -17,3 +17,5 @@ export function mkTmpDir() {
     recursive: true,
   } );
 }
+
+export * from "./trees";
