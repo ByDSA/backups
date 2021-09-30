@@ -20,4 +20,5 @@ export {
 
 export {
   default as Tree,
+  TreeWithoutChildren,
 } from "./Tree";
