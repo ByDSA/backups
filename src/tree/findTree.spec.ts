@@ -1,8 +1,8 @@
-import Tree from "@app/tree/Tree";
 import mockGen from "@mocks/files1";
 import FilesMock from "@tests/FilesMock";
 import { treeDir } from "@tests/index";
 import findTreeAsync from "./findTree";
+import Tree from "./Tree";
 
 describe("all", () => {
   let DIR_TREE_BASE: string;

@@ -1,4 +1,4 @@
-import findTreeAsync from "@app/tree/findTree";
+import findTreeAsync from "./findTree";
 import saveTree from "./save";
 
 type Opts = {
