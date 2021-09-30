@@ -9,12 +9,12 @@ export default function plainPathsMap(t: Tree, basePath: string = "", acc: Paths
 
   for (const c of t.children) {
     const path = `${basePath}/${c.name}`;
-    const plainTreePath: PlainTree = {
+    const plainTree: PlainTree = {
       ...c,
       path,
     };
 
-    acc.set(path, plainTreePath);
+    acc.set(path, plainTree);
 
     plainPathsMap(c, `${basePath}/${c.name}`, acc);
   }
