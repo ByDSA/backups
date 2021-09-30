@@ -1,22 +1,30 @@
 import { cmd } from "@app/cmd";
-import { genTmpFolder } from "@app/files";
+import { genTmpFolder, rm } from "@app/files";
 import chalk from "chalk";
 import { existsSync } from "fs";
 import { basename, dirname } from "path";
 
-export default function mount(iso: string, folder?: string): string {
-  let finalFolder: string;
+type Options = {
+  folder?: string;
+  baseFolder?: string;
+};
+export default function mount(iso: string, opts?: Options): string {
+  let folder: string | undefined = opts?.folder;
+  const baseFolder = opts?.baseFolder || dirname(iso);
 
   if (!folder)
-    finalFolder = genTmpFolder(dirname(iso), ISOwithoutExt(basename(iso)));
-  else
-    finalFolder = folder;
+    folder = genTmpFolder(baseFolder, ISOwithoutExt(basename(iso)));
 
-  console.log(chalk.blue(`Mounting ${iso} in ${finalFolder}`));
+  console.log(chalk.blue(`Mounting ${iso} in ${folder}`));
 
-  cmd(`sudo mount "${iso}" "${finalFolder}"`);
+  try {
+    cmd(`sudo mount "${iso}" "${folder}"`);
+  } catch (e) {
+    rm(folder);
+    throw e;
+  }
 
-  return finalFolder;
+  return folder;
 }
 
 function ISOwithoutExt(name: string): string {

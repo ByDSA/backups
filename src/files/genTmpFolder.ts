@@ -6,13 +6,13 @@ export default function genTmpFolder(location: string, nameBase?: string): strin
   nameBase ??= "asdf";
   let num = 1;
 
-  while (existsSync(folderWithNum(nameBase, num)))
+  while (existsSync(getFullPath(location, folderWithNum(nameBase, num))))
     num++;
 
   // eslint-disable-next-line no-param-reassign
   nameBase = folderWithNum(nameBase, num);
 
-  const fullPath = path.resolve(location, nameBase);
+  const fullPath = getFullPath(location, nameBase);
 
   mkdirSync(fullPath);
 
@@ -24,4 +24,8 @@ function folderWithNum(folder: string, num: number = 1) {
     return folder;
 
   return folder + num;
+}
+
+function getFullPath(location: string, folder: string): string {
+  return path.resolve(location, folder);
 }

@@ -4,7 +4,7 @@ import { treeDir } from "@tests/index";
 import path from "path";
 import { readTree } from ".";
 import isTreeEqual from "./compare";
-import { findTree } from "./findTree";
+import findTreeAsync from "./findTree";
 import generateTree from "./generate";
 
 describe("all", () => {
@@ -22,7 +22,7 @@ describe("all", () => {
 
   it("exportTree", async () => {
     const basePath = treeDir();
-    const expected = await findTree(basePath);
+    const expected = await findTreeAsync(basePath);
     const out = path.resolve(basePath, "test.tree");
 
     await generateTree( {

@@ -2,7 +2,7 @@ import Tree from "@app/tree/Tree";
 import mockGen from "@mocks/files1";
 import FilesMock from "@tests/FilesMock";
 import { treeDir } from "@tests/index";
-import { findTree } from "./findTree";
+import findTreeAsync from "./findTree";
 
 describe("all", () => {
   let DIR_TREE_BASE: string;
@@ -20,7 +20,7 @@ describe("all", () => {
   } );
 
   it("findTree", async () => {
-    const actual: Tree = await findTree(DIR_TREE_BASE);
+    const actual: Tree = await findTreeAsync(DIR_TREE_BASE);
     const expected: Tree = {
       hash: "b909225523bb35b83825b8def68c1f6eaecd778f5e2e4bf30f50e67e6a3a2dfd",
       size: 34,

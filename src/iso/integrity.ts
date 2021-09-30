@@ -1,18 +1,11 @@
 import { isEqualDir, rm } from "@app/files";
 import chalk from "chalk";
-import { mkdirSync } from "fs";
-import mount, { umount, umountIfExists } from "./mount";
+import mount, { umount } from "./mount";
 
 export default function integrity(inputFolder: string, outputISO: string) {
-  const tmp = `${inputFolder}_bkptmp`;
-
-  if (umountIfExists(tmp))
-    rm(tmp);
+  const tmp = mount(outputISO);
 
   console.log(`Temp folder: ${tmp}`);
-
-  mkdirSync(tmp);
-  mount(outputISO, tmp);
 
   if (!isEqualDir(inputFolder, tmp)) {
     console.log(chalk.red("ISO is not equal as base folder!"));

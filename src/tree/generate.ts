@@ -1,4 +1,4 @@
-import { findTree } from "@app/tree/findTree";
+import findTreeAsync from "@app/tree/findTree";
 import saveTree from "./save";
 
 type Opts = {
@@ -7,7 +7,7 @@ type Opts = {
 };
 
 export default async function generateTree(opts: Opts) {
-  const tree = await findTree(opts.folder);
+  const tree = await findTreeAsync(opts.folder);
 
   saveTree(tree, opts.out);
 }
