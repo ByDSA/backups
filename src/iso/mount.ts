@@ -44,3 +44,13 @@ export function umountIfExists(folder: string) {
 
   return false;
 }
+
+export function isMountPoint(fullpath: string): boolean {
+  try {
+    cmd(`mountpoint -q -- "${fullpath}"`);
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
