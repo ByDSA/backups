@@ -17,5 +17,3 @@ export function mkTmpDir() {
     recursive: true,
   } );
 }
-
-export * from "./trees";
