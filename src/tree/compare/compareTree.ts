@@ -1,14 +1,17 @@
-import { dirname } from "path";
+import { basename, dirname } from "path";
 import { flattenHashesMap, flattenPathsMap } from "../flat";
 import { toPathsMap } from "../maps";
 import Tree from "../Tree";
 import Difference from "./Difference";
 
+type DifferenceCallBack = (difference: Difference)=> void;
+type Filter = (difference: Difference)=> boolean;
 type Options = {
-
+  onDifference?: DifferenceCallBack;
+  filter?: Filter;
 };
 const OptionsDefault: Options = {
-
+  onDifference: show,
 };
 
 class CompareTreeProcess {
@@ -134,6 +137,11 @@ class CompareTreeProcess {
       default: throw new Error();
     }
     this.differences.push(difference);
+
+    if (this.opts?.onDifference) {
+      if (!this.opts?.filter || this.opts?.filter(difference))
+        this.opts.onDifference(difference);
+    }
   }
 
   private addToDiffMap2(to: string, difference: Difference) {
@@ -165,4 +173,29 @@ export default function compareTree(
   opts?: Options,
 ): Difference[] {
   return new CompareTreeProcess(previousTree, afterTree, opts).process();
+}
+
+function show(difference: Difference) {
+  let msg: string;
+
+  switch (difference.type) {
+    case "created":
+      msg = `New: ${difference.to}`;
+      break;
+    case "updated":
+      msg = `Updated: ${difference.to}`;
+      break;
+    case "deleted":
+      msg = `Del: ${difference.from}`;
+      break;
+    case "moved":
+      msg = `Moved from '${difference.from}' to '${difference.to}'`;
+      break;
+    case "renamed":
+      msg = `Renamed '${difference.from}' to '${basename(difference.to)}'`;
+      break;
+    default: throw new Error();
+  }
+
+  console.log(msg);
 }
