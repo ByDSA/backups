@@ -1,4 +1,4 @@
-import { flatten, FlatTree } from "./flat";
+import { flattenTree, FlatTree } from "./flat";
 import Tree from "./Tree";
 
 type Options = {
@@ -31,7 +31,7 @@ export default function findDuplicates(t: Tree, opts?: Options): Set<FlatTree>[]
     ...DefaultOptions,
     ...opts,
   };
-  const flatTree = flatten(t);
+  const flatTree = flattenTree(t);
   const checked: FlatTree[] = [];
   const duplicates: Set<FlatTree>[] = [];
 

@@ -1,20 +1,20 @@
-import { removeChildren, ROOT_WITH_CHILDREN } from "@tests/trees";
+import { R1, R1_CHILDREN_N1_N2, removeChildren } from "@tests/trees";
 import flattenNode from "./flattenNode";
 import FlatTree from "./FlatTree";
 
 describe("flattenNode", () => {
   it("removes children", () => {
-    const actual = flattenNode(ROOT_WITH_CHILDREN);
+    const actual = flattenNode(R1_CHILDREN_N1_N2);
 
     expect((<any>actual).children).toBeUndefined();
   } );
 
-  it("only root", () => {
+  it("returns only root", () => {
     const expected: FlatTree = {
-      ...removeChildren(ROOT_WITH_CHILDREN),
-      path: "/root",
+      ...removeChildren(R1),
+      path: `/${R1.name}`,
     };
-    const actual = flattenNode(ROOT_WITH_CHILDREN);
+    const actual = flattenNode(R1_CHILDREN_N1_N2);
 
     expect(actual).toStrictEqual(expected);
   } );
