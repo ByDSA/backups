@@ -19,7 +19,7 @@ export default function flattenHashesMap(t: Tree, basePath: string = "", acc: Ha
 
   if (t.children) {
     for (const c of t.children)
-      flattenHashesMap(c, `${basePath}/${c.name}`, acc);
+      flattenHashesMap(c, `${basePath}/${t.name}`, acc);
   }
 
   return acc;

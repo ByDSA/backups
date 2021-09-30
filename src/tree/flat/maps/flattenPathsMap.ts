@@ -3,7 +3,8 @@ import flattenNode from "../flattenNode";
 import FlatTree from "../FlatTree";
 
 type Path = string;
-type PathsMap = Map<Path, FlatTree>;
+export type PathsMap = Map<Path, FlatTree>;
+
 export default function flattenPathsMap(t: Tree, basePath: string = "", acc: PathsMap = new Map<Path, FlatTree>()): PathsMap {
   const flatNode = flattenNode(t, basePath);
 
@@ -11,7 +12,7 @@ export default function flattenPathsMap(t: Tree, basePath: string = "", acc: Pat
 
   if (t.children) {
     for (const c of t.children)
-      flattenPathsMap(c, `${basePath}/${c.name}`, acc);
+      flattenPathsMap(c, `${basePath}/${t.name}`, acc);
   }
 
   return acc;
