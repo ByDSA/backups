@@ -1,5 +1,6 @@
 /* eslint-disable guard-for-in */
-import Tree from "./Tree";
+/* eslint-disable no-restricted-syntax */
+import Tree from "../Tree";
 
 export type Options = {
   level: number;
@@ -10,7 +11,7 @@ const defaultOptions = {
   ignoreTimesLevel0: true,
 };
 
-export default function isTreeEqual(t1: Tree, t2: Tree, opts?: Options): boolean {
+export default function isEqual(t1: Tree, t2: Tree, opts?: Options): boolean {
   const finalOpts = {
     ...defaultOptions,
     ...opts,
@@ -39,12 +40,11 @@ export default function isTreeEqual(t1: Tree, t2: Tree, opts?: Options): boolean
     return false;
 
   if (t1.children !== undefined) {
-    // eslint-disable-next-line no-restricted-syntax
     for (const i in t1.children) {
       if (t2.children === undefined)
         throw new Error();
 
-      if (!isTreeEqual(
+      if (!isEqual(
         t1.children.sort()[i],
         t2.children.sort()[i],
         {
@@ -62,24 +62,3 @@ export default function isTreeEqual(t1: Tree, t2: Tree, opts?: Options): boolean
 function xor(a: boolean, b: boolean): boolean {
   return a ? !b : b;
 }
-
-// TODO
-/*
-export default function compareTree(t1: Tree, t2: Tree, opts?: Options): Difference[] {
-  const finalOpts = {
-    ...defaultOptions,
-    ...opts,
-  };
-
-  // Trees que se han movido (mismo hash, otra ruta, ignorar archivos vacíos)
-
-  // Trees que se han borrado
-
-  // Trees nuevos
-
-  // Trees modificados
-
-  return {
-  };
-}
-*/

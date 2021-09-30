@@ -3,7 +3,7 @@ import FilesMock from "@tests/FilesMock";
 import { treeDir } from "@tests/index";
 import path from "path";
 import { readTree } from ".";
-import isTreeEqual from "./compare";
+import { isEqual } from "./compare";
 import findTreeAsync from "./findTree";
 import generateTree from "./generate";
 
@@ -31,6 +31,6 @@ describe("all", () => {
     } );
     const actual = readTree(out);
 
-    expect(isTreeEqual(actual, expected)).toBeTruthy();
+    expect(isEqual(actual, expected)).toBeTruthy();
   } );
 } );
