@@ -1,5 +1,5 @@
+import { plain, PlainTree } from "./plain";
 import Tree from "./Tree";
-import { plain, PlainTree } from "./utils";
 
 type Options = {
   consider?: {

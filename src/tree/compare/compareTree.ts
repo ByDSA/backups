@@ -1,5 +1,5 @@
+import { plainPathsMap } from "../plain";
 import Tree from "../Tree";
-import { plainPathsMap } from "../utils";
 
 type Options = {
 
@@ -43,7 +43,7 @@ export default function compareTree(t1: Tree, t2: Tree, opts?: Options): Differe
   for (const pair of plainPathMap1) {
     const path = pair[0];
 
-    if (!plainPathMap2.has(path)) { // Deleted or moved
+    if (!plainPathMap2.has(path)) { // Deleted, moved or renamed
       differences.push( {
         type: "deleted",
         from: path,
