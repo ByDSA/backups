@@ -58,7 +58,7 @@ export default class FilesMock {
       } );
 
       if (!f.folder) {
-        fs.writeFileSync(fullPath, f.content ?? "");
+        fs.writeFileSync(fullPath, f.content ?? "", f.encoding);
         // eslint-disable-next-line no-await-in-loop
         await getUpdateFileTimeFunc(basePath)(f);
       } else
