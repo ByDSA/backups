@@ -1,5 +1,5 @@
 import { cmd } from "@app/cmd";
-import { exportTree } from "@app/tree";
+import { generateTree } from "@app/tree";
 import chalk from "chalk";
 import { existsSync } from "fs";
 import path, { basename } from "path";
@@ -9,7 +9,7 @@ export default function make(inputFolder: string, outputISO: string) {
 
   const label = basename(inputFolder);
 
-  generateTree(inputFolder);
+  generateTreeMake(inputFolder);
 
   cmd(`mkisofs -allow-limited-size -iso-level 4 -J -joliet-long -l -R -V "${label}" -o "${outputISO}" "${inputFolder}"`);
 
@@ -23,10 +23,10 @@ function checkProcessIsDone(outputISO: string) {
   }
 }
 
-function generateTree(inputFolder: string) {
+function generateTreeMake(inputFolder: string) {
   const out = path.resolve(inputFolder, "index.tree");
 
-  exportTree( {
+  generateTree( {
     folder: inputFolder,
     out,
   } );

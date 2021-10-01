@@ -3,7 +3,7 @@ export {
 } from "./compare";
 
 export {
-  default as exportTree,
+  default as generateTree,
 } from "./generate";
 
 export {
