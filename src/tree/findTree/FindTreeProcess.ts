@@ -52,9 +52,7 @@ export default class FindTreeProcess {
 
   private async getTreeFromFolderAsync(fullpath: string) {
     console.log(`Reading folder ${fullpath} ...`);
-    const previousFolder = this.currentFolder;
 
-    this.currentFolder = fullpath;
     let ret: Tree | null | undefined;
 
     if (this.opts.useExistentTrees) {
@@ -63,6 +61,10 @@ export default class FindTreeProcess {
       if (ret)
         return ret;
     }
+
+    const previousFolder = this.currentFolder;
+
+    this.currentFolder = fullpath;
 
     const stats = lstatSync(fullpath);
     const children = await this.getChildrenFromFolder(fullpath);
