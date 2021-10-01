@@ -14,5 +14,8 @@ export default MimeType;
 export function getMimeType(fullpath: string): string | null {
   const ret = execSync(`file --mime-type -b "${fullpath}"`).toString();
 
+  if (ret.includes("No such file"))
+    return null;
+
   return ret.replace(/\n/g, "");
 }

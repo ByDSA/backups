@@ -34,11 +34,10 @@ describe("all", () => {
     expect(actual).toBe(expected);
   } );
   it("not exists", () => {
-    const expected = Mime.NOT_EXISTS;
-    const fullpath = path.resolve(DIR_BASE, "noContent");
+    const fullpath = path.resolve(DIR_BASE, "not exists");
     const actual = getMimeType(fullpath);
 
-    expect(actual).toBe(expected);
+    expect(actual).toBeNull();
   } );
   it("png", () => {
     const expected = Mime.PNG;
