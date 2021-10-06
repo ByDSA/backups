@@ -8,17 +8,25 @@ type Options = {
   folder?: string;
   baseFolder?: string;
 };
-export default function mount(iso: string, opts?: Options): string {
+export default function mount(isoFullpath: string, opts?: Options): string {
   let folder: string | undefined = opts?.folder;
-  const baseFolder = opts?.baseFolder || dirname(iso);
+  const baseFolder = opts?.baseFolder || dirname(isoFullpath);
 
   if (!folder)
-    folder = genTmpFolder(baseFolder, ISOwithoutExt(basename(iso)));
+    folder = genTmpFolder(baseFolder, ISOwithoutExt(basename(isoFullpath)));
 
-  console.log(chalk.blue(`Mounting ${iso} in ${folder}`));
+  console.log(chalk.blue(`Mounting ${isoFullpath} in ${folder}`));
 
   try {
-    cmd(`sudo mount "${iso}" "${folder}"`);
+    // const isISO9660 = execSync(`file "${isoFullpath}"`)
+    //   .toString()
+    //   .includes("ISO 9660");
+
+    try {
+      cmd(`sudo mount "${isoFullpath}" "${folder}" -t udf`);
+    } catch (e1) {
+      cmd(`sudo mount "${isoFullpath}" "${folder}" -t iso9660`);
+    }
   } catch (e) {
     rm(folder);
     throw e;

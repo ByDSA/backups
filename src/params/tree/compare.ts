@@ -1,5 +1,6 @@
-import { compareTree, readTree } from "@app/tree";
+import { compareTree, readTree, Tree } from "@app/tree";
 import { Difference } from "@app/tree/compare";
+import { getTreeAt } from "@app/tree/findTree/utils";
 import chalk from "chalk";
 import yargs, { Arguments } from "yargs";
 
@@ -22,6 +23,14 @@ function builder(y: yargs.Argv<{}>) {
     type: "boolean",
     describe: "Shows only deleted files or folders",
   } );
+  y.option("onlyFiles", {
+    type: "boolean",
+    describe: "Shows only files and not folders",
+  } );
+  y.option("ignoreTrees", {
+    type: "boolean",
+    describe: "Ignore folder (or ISO) tree files",
+  } );
 }
 
 function handler<U>(argv: Arguments<U>) {
@@ -29,14 +38,43 @@ function handler<U>(argv: Arguments<U>) {
     input1: <string>argv.input1,
     input2: <string>argv.input2,
     onlyDeleted: <boolean>argv.onlyDeleted,
+    onlyFiles: <boolean>argv.onlyFiles,
   };
 
   console.log(chalk.blue(`Comparing trees: '${config.input1}' and '${config.input2}' ...`));
-  const t1 = readTree(config.input1);
-  const t2 = readTree(config.input2);
+  const t1 = readOrGetTree(config.input1);
+  const t2 = readOrGetTree(config.input2);
   const opts = {
-    filter: (difference: Difference) => (!config.onlyDeleted || difference.type === "deleted"),
+    filter: (difference: Difference) => {
+      if (config.onlyDeleted && difference.type !== "deleted")
+        return false;
+
+      if (config.onlyFiles && difference.isFolder)
+        return false;
+
+      return true;
+    },
   };
 
   compareTree(t1, t2, opts);
+}
+
+function readOrGetTree(fullpath: string): Tree {
+  let ret: Tree | null;
+
+  try {
+    ret = readTree(fullpath);
+
+    return ret;
+  } catch (e) {
+    if (fullpath.endsWith(".tree"))
+      throw new Error(`Cannot be found tree '${fullpath}'`);
+  }
+
+  ret = getTreeAt(fullpath);
+
+  if (!ret)
+    throw new Error(`Cannot be found a tree for ${fullpath}`);
+
+  return ret;
 }

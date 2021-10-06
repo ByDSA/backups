@@ -1,20 +1,24 @@
-import { basename, dirname } from "path";
+import { dirname } from "path";
 import { flattenHashesMap, flattenPathsMap } from "../flat";
 import { toPathsMap } from "../maps";
 import Tree from "../Tree";
 import Difference from "./Difference";
+import Options, { DEFAULT_OPTIONS } from "./Options";
+import { genIsFolderObj, ignoreListContains } from "./utils";
 
-type DifferenceCallBack = (difference: Difference)=> void;
-type Filter = (difference: Difference)=> boolean;
-type Options = {
-  onDifference?: DifferenceCallBack;
-  filter?: Filter;
-};
-const OptionsDefault: Options = {
-  onDifference: show,
+type ProcessFromDifferenceOpts = {
+  from: string;
+  isFolder: boolean;
 };
 
-class CompareTreeProcess {
+type ProcessToDifferenceOpts = {
+  to: string;
+  isFolder: boolean;
+};
+
+type ProcessFromToDifferenceOpts = ProcessFromDifferenceOpts & ProcessToDifferenceOpts;
+
+export default class CompareTreeProcess {
   private flatPathMap1;
 
   private flatPathMap2;
@@ -23,24 +27,36 @@ class CompareTreeProcess {
 
   private flatHashesMap2;
 
-  private pathsMap1;
+  private pathsMap1: Map<string, Tree>;
 
-  private pathsMap2;
+  private pathsMap2: Map<string, Tree>;
 
-  private differencesPathMap1;
+  private differencesPathMap1: Map<string, Difference[]>;
 
-  private differencesPathMap2;
+  private differencesPathMap2: Map<string, Difference[]>;
 
   private differences: Difference[];
+
+  private ignoredMove: string[];
+
+  private ignoredDelete: string[];
 
   constructor(private previousTree: Tree,
     private afterTree: Tree,
     private opts?: Options) {
     this.opts = {
-      ...OptionsDefault,
+      ...DEFAULT_OPTIONS,
       ...this.opts,
     };
     this.differences = [];
+
+    this.differencesPathMap1 = new Map<string, Difference[]>();
+    this.differencesPathMap2 = new Map<string, Difference[]>();
+    this.pathsMap1 = new Map<string, Tree>();
+    this.pathsMap2 = new Map<string, Tree>();
+
+    this.ignoredMove = [];
+    this.ignoredDelete = [];
   }
 
   private calculateMaps() {
@@ -50,8 +66,6 @@ class CompareTreeProcess {
     this.flatHashesMap2 = flattenHashesMap(this.afterTree);
     this.pathsMap1 = toPathsMap(this.previousTree);
     this.pathsMap2 = toPathsMap(this.afterTree);
-    this.differencesPathMap1 = new Map<string, Difference[]>();
-    this.differencesPathMap2 = new Map<string, Difference[]>();
   }
 
   process(): Difference[] {
@@ -60,28 +74,34 @@ class CompareTreeProcess {
     for (const pair of this.pathsMap1) {
       const from = pair[0];
       const prev = pair[1];
+      const isFolder = !!prev.children;
 
       if (!this.pathsMap2.has(from)) { // Deleted, moved or renamed
         const afterNodesWithPrevNodeHash = this.flatHashesMap2.get(prev.hash);
 
         if (afterNodesWithPrevNodeHash) { // moved or renamed
           const to = afterNodesWithPrevNodeHash[0].path;
-          // TODO: para considerarse movido, no tiene que existir el path en el tree original;
-          // si existe, es deleted
-          // TODO: y si hay más de un archivo con ese hash?
-          const isRenamed = dirname(to) === dirname(from);
-          const difference: Difference = {
-            type: isRenamed ? "renamed" : "moved",
+          const type = dirname(to) === dirname(from) ? "renamed" : "moved";
+          const params = {
             from,
             to,
+            isFolder,
           };
 
-          this.addDifference(difference);
+          if (type === "moved")
+            this.processMovedDifference(params);
+            // TODO: para considerarse movido, no tiene que existir el path en el tree original;
+          // si existe, es deleted
+          // TODO: y si hay más de un archivo con ese hash?
+          else
+            this.processRenamedDifference(params);
         } else {
-          this.addDifference( {
-            type: "deleted",
+          const params = {
             from,
-          } );
+            isFolder,
+          };
+
+          this.processDeletedDifference(params);
         }
       }
     }
@@ -89,13 +109,16 @@ class CompareTreeProcess {
     for (const pair of this.pathsMap2) {
       const to = pair[0];
       const after = pair[1];
+      const isFolder = !!after.children;
 
       if (!this.pathsMap1.has(to) && !this.differencesPathMap2.get(to)) {
-        this.addDifference( {
-          type: "created",
+        const params = {
           to,
+          isFolder,
           tree: after,
-        } );
+        };
+
+        this.processCreatedDifference(params);
       }
     }
 
@@ -106,6 +129,59 @@ class CompareTreeProcess {
     // Trees modificados
 
     return this.differences;
+  }
+
+  private processMovedDifference( { from, to, isFolder }: ProcessFromToDifferenceOpts) {
+    if (ignoreListContains(this.ignoredMove, from))
+      return;
+
+    if (isFolder)
+      this.ignoredMove.push(from);
+
+    const difference: Difference = {
+      type: "moved",
+      from,
+      to,
+      ...genIsFolderObj(isFolder),
+    };
+
+    this.addDifference(difference);
+  }
+
+  private processDeletedDifference( { from, isFolder }: ProcessFromDifferenceOpts) {
+    if (ignoreListContains(this.ignoredDelete, from))
+      return;
+
+    if (isFolder && false) // TODO
+      this.ignoredDelete.push(from);
+
+    this.addDifference( {
+      type: "deleted",
+      from,
+      ...genIsFolderObj(isFolder),
+    } );
+  }
+
+  private processRenamedDifference( { from, to, isFolder }: ProcessFromToDifferenceOpts) {
+    const difference: Difference = {
+      type: "renamed",
+      from,
+      to,
+      ...genIsFolderObj(isFolder),
+    };
+
+    this.addDifference(difference);
+  }
+
+  private processCreatedDifference( { to,
+    isFolder,
+    tree }: ProcessToDifferenceOpts & {tree: Tree} ) {
+    this.addDifference( {
+      type: "created",
+      to,
+      tree,
+      ...genIsFolderObj(isFolder),
+    } );
   }
 
   private addDifference(difference: Difference) {
@@ -165,37 +241,4 @@ class CompareTreeProcess {
 
     array.push(difference);
   }
-}
-
-export default function compareTree(
-  previousTree: Tree,
-  afterTree: Tree,
-  opts?: Options,
-): Difference[] {
-  return new CompareTreeProcess(previousTree, afterTree, opts).process();
-}
-
-function show(difference: Difference) {
-  let msg: string;
-
-  switch (difference.type) {
-    case "created":
-      msg = `New: ${difference.to}`;
-      break;
-    case "updated":
-      msg = `Updated: ${difference.to}`;
-      break;
-    case "deleted":
-      msg = `Del: ${difference.from}`;
-      break;
-    case "moved":
-      msg = `Moved from '${difference.from}' to '${difference.to}'`;
-      break;
-    case "renamed":
-      msg = `Renamed '${difference.from}' to '${basename(difference.to)}'`;
-      break;
-    default: throw new Error();
-  }
-
-  console.log(msg);
 }

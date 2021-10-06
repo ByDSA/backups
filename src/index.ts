@@ -1,7 +1,9 @@
 import chalk from "chalk";
+import path from "path";
 import { Config, ConfigWithOut } from "./Config";
 import { rm } from "./files";
 import { calculateOutput as calculateOutputISOFileName, makeISO } from "./iso";
+import { generateTree } from "./tree";
 import { Type } from "./type";
 
 export function calculateOutputFileName( { out, input, type }: ConfigWithOut) {
@@ -19,9 +21,17 @@ export function removePreviousIfNeeded( { force, out }: ConfigWithOut) {
     rm(out);
 }
 
-export function makeBackup( { input, out, type }: ConfigWithOut) {
+export async function makeBackupAsync( { input, out, type }: ConfigWithOut) {
+  console.log("Generating tree...");
+  const tree = await generateTree( {
+    folder: input,
+    out: path.resolve(input, "index.tree"),
+  } );
+
   switch (type) {
-    case Type.ISO: return makeISO(input, out);
+    case Type.ISO: return makeISO(input, out, {
+      tree,
+    } );
     default: throw new Error("Type invalid");
   }
 }

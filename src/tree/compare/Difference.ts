@@ -13,7 +13,13 @@ type Treeable = {
   tree: Tree;
 };
 
-type Difference = From & {
+type All = {
+  isFolder?: boolean;
+  type: string;
+};
+
+type Difference = All
+& (From & {
   type: "deleted";
 } | FromTo & {
   type: "moved";
@@ -23,6 +29,6 @@ type Difference = From & {
   type: "created";
 } | To & Treeable & {
   type: "updated";
-};
+} ) ;
 
 export default Difference;

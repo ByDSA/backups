@@ -1,5 +1,5 @@
 export {
-  compareTree, isEqual as isTreeEqual,
+  default as compareTree, isEqual as isTreeEqual,
 } from "./compare";
 
 export {

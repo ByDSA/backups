@@ -82,7 +82,9 @@ export async function getTreeFromNormalFileAsync(fullpath: string): Promise<Tree
 }
 
 export function isPathInMountedDevice(fullpath: string): boolean {
-  while (fullpath) {
+  fullpath = path.resolve(fullpath); // eslint-disable-line no-param-reassign
+
+  while (fullpath !== "/") {
     if (isMountPoint(fullpath))
       return true;
 

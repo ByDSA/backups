@@ -4,7 +4,7 @@ import { Type } from "@app/type";
 import { fetchPackageJson } from "@app/utils/node";
 import chalk from "chalk";
 import yargs, { Arguments } from "yargs";
-import { calculateOutputFileName, deleteBaseSource, makeBackup, removePreviousIfNeeded } from "..";
+import { calculateOutputFileName, deleteBaseSource, makeBackupAsync, removePreviousIfNeeded } from "..";
 
 export default function command() {
   yargs.command("$0 [input]", `Backup ${version()}`, builder, handler)
@@ -24,7 +24,7 @@ function builder(y: yargs.Argv<{}>) {
   } );
 }
 
-function handler<U>(argv: Arguments<U>) {
+async function handler<U>(argv: Arguments<U>) {
   const config: ConfigWithOut = {
     input: <string>argv.input,
     out: <string>argv.out,
@@ -34,15 +34,14 @@ function handler<U>(argv: Arguments<U>) {
     type: <Type>argv.type,
   };
 
-  console.log(config);
-
   console.log(chalk.blue(`[Backup: '${config.input}']`));
 
   config.out = calculateOutputFileName(config);
+  console.log(config);
 
   removePreviousIfNeeded(config);
 
-  makeBackup(config);
+  await makeBackupAsync(config);
 
   if (config.checkAfter)
     checkAfter(config);

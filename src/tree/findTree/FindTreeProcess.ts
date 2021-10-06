@@ -100,7 +100,22 @@ export default class FindTreeProcess {
     if (d.isDirectory())
       return this.getTreeFromFolderAsync(fullpath);
 
-    throw new Error();
+    if (d.isBlockDevice())
+      throw new Error(`'${fullpath}' is Block Device.`);
+
+    if (d.isCharacterDevice())
+      throw new Error(`'${fullpath}' is Character Device.`);
+
+    if (d.isFIFO())
+      throw new Error(`'${fullpath}' is FIFO.`);
+
+    if (d.isSocket())
+      throw new Error(`'${fullpath}' is Socket.`);
+
+    if (d.isSymbolicLink())
+      throw new Error(`'${fullpath}' is Symbolic Link.`);
+
+    throw new Error(`Unexpected error processing '${fullpath}'`);
   }
 
   // eslint-disable-next-line require-await
@@ -128,6 +143,7 @@ export default class FindTreeProcess {
     const branches: Tree[] = [];
 
     for (const d of content) {
+      // TODO: ignore trees if option
       const b = await this.dirent2TreeAsync(d); // eslint-disable-line no-await-in-loop
 
       branches.push(b);
@@ -142,6 +158,8 @@ export default class FindTreeProcess {
     const names = new Set();
 
     for (const d of content) {
+      // TODO: ignore trees if option
+
       const dName = d.name;
 
       if (names.has(dName))
@@ -186,22 +204,24 @@ export default class FindTreeProcess {
     return ret;
   }
 
-  private async processISOAsync(folderOrFile: string): Promise<Tree> {
+  private async processISOAsync(fileFullpath: string): Promise<Tree> {
     const previousState = this.isInsideISO;
+    const fileName = fileFullpath;
 
     this.isInsideISO = true;
 
-    folderOrFile = mountISO(folderOrFile, { // eslint-disable-line no-param-reassign
+    fileFullpath = mountISO(fileFullpath, { // eslint-disable-line no-param-reassign
       baseFolder: this.lastFolderOutsideISO,
     } );
 
-    checkFolderOrFileIsValid(folderOrFile);
+    checkFolderOrFileIsValid(fileFullpath);
 
-    const ret = await this.getTreeFromFolderAsync(folderOrFile);
+    const ret = await this.getTreeFromFolderAsync(fileFullpath);
 
+    ret.name = fileName;
     try {
-      umountISO(folderOrFile);
-      rm(folderOrFile);
+      umountISO(fileFullpath);
+      rm(fileFullpath);
     } catch (e) { }// eslint-disable-line no-empty
 
     this.isInsideISO = previousState;
