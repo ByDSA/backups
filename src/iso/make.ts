@@ -66,8 +66,8 @@ function findOneSizeLimitation(tree: Tree): Tree | null {
 }
 
 function findOneLengthLimitation(tree: Tree): Tree | null {
-  return findOne(tree, (t: Tree) => (t.children === undefined && t.name.length > 31)
-   || t.name.length > 30);
+  return findOne(tree, (t: Tree) => (t.children === undefined && t.name.length > 310)
+   || t.name.length > 300);
 }
 
 function findOne(tree: Tree, condition: (tree: Tree)=> boolean): Tree | null {

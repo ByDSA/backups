@@ -1,5 +1,6 @@
 import { generateTree } from "@app/tree";
 import chalk from "chalk";
+import path, { basename, dirname } from "path";
 import yargs, { Arguments } from "yargs";
 
 export default function command() {
@@ -11,6 +12,10 @@ function builder(y: yargs.Argv<{}>) {
     type: "string",
     describe: "Input file or folder",
     demandOption: true,
+  } );
+  y.option("dontFollowISOs", {
+    type: "boolean",
+    describe: "Don't follow ISOs recursively",
   } );
   y.option("out", {
     alias: "o",
@@ -24,8 +29,9 @@ async function handler<U>(argv: Arguments<U>) {
     input: <string>argv.input,
     out: <string>argv.out,
     ignoreTrees: <boolean>argv.ignoreTrees,
+    dontFollowISOs: <boolean>argv.dontFollowISOs,
   };
-  const out = config.out || `${config.input}.tree`;
+  const out = calcOutPath(config);
 
   console.log(chalk.blue(`Generating tree from '${config.input}'...`));
 
@@ -33,7 +39,17 @@ async function handler<U>(argv: Arguments<U>) {
     folder: config.input,
     out,
     ignoreValidTreeFiles: config.ignoreTrees,
+    followISOs: !config.dontFollowISOs,
   } );
 
   console.log(chalk.green(`Generated at "${out}"`));
+}
+
+function calcOutPath(config: any) {
+  if (config.out)
+    return config.out;
+
+  const inputFullPath = path.resolve(dirname(config.input), basename(config.input));
+
+  return `${inputFullPath}.tree`;
 }

@@ -27,6 +27,7 @@ export default class FindTreeProcess {
     this.isInsideISO = false;
   }
 
+  // eslint-disable-next-line require-await
   private async getTreeFromISOAsync(fullpath: string): Promise<Tree> {
     console.log(`Reading ISO ${fullpath} ...`);
 
@@ -34,20 +35,24 @@ export default class FindTreeProcess {
 
     let tree: Tree | null | undefined;
 
-    if (this.opts.useExistentTrees)
+    if (this.opts.useExistentTrees) {
       tree = getTreeBesideAt(fullpath);
 
+      if (tree)
+        return tree;
+    }
+
+    if (!this.opts.followISOs)
+      return getTreeFromNormalFileAsync(fullpath);
+
     try {
-      if (!tree)
-        tree = await this.processAsync(fullpath, false);
+      return this.processAsync(fullpath, false);
     } catch (e2) { // Error on mount
       if (e2 instanceof Error)
         console.log(e2.message);
 
-      tree = await getTreeFromNormalFileAsync(fullpath);
+      return getTreeFromNormalFileAsync(fullpath);
     }
-
-    return tree;
   }
 
   private async getTreeFromFolderAsync(fullpath: string) {

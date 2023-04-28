@@ -1,6 +1,6 @@
 import { hashFileStream } from "@app/files/hash";
 import { isMountPoint } from "@app/iso/mount";
-import { lstatSync } from "fs";
+import { existsSync, lstatSync } from "fs";
 import path, { basename, dirname } from "path";
 import sha256File from "sha256-file";
 import { Tree } from "..";
@@ -55,11 +55,14 @@ export function isISOFile(folder: string) {
   return folder.toLocaleLowerCase().endsWith(".iso");
 }
 
-export async function calcHashFromFileAsync(filepath: string) {
+export async function calcHashFromFileAsync(fileFullpath: string) {
+  if (!existsSync(fileFullpath))
+    throw new Error(`File ${fileFullpath} doesn't exist.`);
+
   try {
-    return sha256File(filepath);
+    return sha256File(fileFullpath);
   } catch (e) {
-    return await hashFileStream(filepath); // eslint-disable-line no-return-await
+    return await hashFileStream(fileFullpath); // eslint-disable-line no-return-await
   }
 }
 

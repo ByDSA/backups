@@ -1,17 +1,15 @@
 import findTreeAsync from "./findTree";
+import Options from "./findTree/Options";
 import saveTree from "./save";
 import Tree from "./Tree";
 
-type Opts = {
+type Opts = Options & {
   folder: string;
   out: string;
-  ignoreValidTreeFiles?: boolean;
 };
 
 export default async function generateTree(opts: Opts): Promise<Tree> {
-  const tree = await findTreeAsync(opts.folder, {
-    ignoreValidTreeFiles: opts.ignoreValidTreeFiles,
-  } );
+  const tree = await findTreeAsync(opts.folder, opts);
 
   saveTree(tree, opts.out);
 
