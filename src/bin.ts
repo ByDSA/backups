@@ -1,3 +1,4 @@
+#!/bin/node
 import chalk from "chalk";
 import { forceSudo, processParams } from "./index";
 
