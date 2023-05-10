@@ -1,6 +1,5 @@
 import fs from "fs";
 import { dirname } from "path";
-import util from "util";
 import { utimes } from "utimes";
 import FileNode from "./FileNode";
 
@@ -39,7 +38,7 @@ export default class FilesMock {
     if (this.status !== MockStatus.READY)
       throw new Error("Mock is already created.");
 
-    await this._delete();
+    this.$deleteIfExists();
 
     const { basePath, files } = this.config;
 
@@ -74,17 +73,22 @@ export default class FilesMock {
     return this;
   }
 
-  private _delete() {
-    return util.promisify(fs.rmdir)(this.config.basePath, {
-      recursive: true,
-    } );
+  private $deleteIfExists() {
+    try {
+      fs.rmdirSync(this.config.basePath, {
+        recursive: true,
+      } );
+    } catch (e: any) {
+      if (e.code !== "ENOENT")
+        throw e;
+    }
   }
 
-  async delete(): Promise<FilesMock> {
+  delete(): FilesMock {
     if (this.status !== MockStatus.CREATED)
       throw new Error("Mock is not created yet.");
 
-    await this._delete();
+    this.$deleteIfExists();
 
     this._status = MockStatus.DELETED;
 
