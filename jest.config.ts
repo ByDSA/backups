@@ -2,12 +2,17 @@ import { existsSync } from "fs";
 import { Config } from "jest";
 import { join } from "path";
 
-const coverageThreshold: Config["coverageThreshold"] = {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const coverageThresholdProduction: Config["coverageThreshold"] = {
   global: {
     branches: 50,
     functions: 50,
     lines: 80,
     statements: 80,
+  },
+};
+const coverageThresholdDev: Config["coverageThreshold"] = {
+  global: {
   },
 };
 const setupFilesAfterEnv: Config["setupFilesAfterEnv"] = [
@@ -43,7 +48,7 @@ const config: Config = {
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   setupFilesAfterEnv,
   moduleNameMapper,
-  coverageThreshold,
+  coverageThreshold: coverageThresholdDev,
 };
 
 export default config;

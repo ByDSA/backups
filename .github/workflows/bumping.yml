@@ -73,7 +73,7 @@ jobs:
       - name: "Comprobar si es la primera release"
         id: first_release
         run: |
-          [[ -z ${{ env.LAST_RELEASE_COMMIT }} ]] && first_release=1 || first_release=0
+          [[ -z "${{ env.LAST_RELEASE_COMMIT }}" ]] && first_release=1 || first_release=0
 
           if [ $first_release -eq 1 ]; then
             echo "No se ha encontrado ningún commit de release. Se considera que es la primera release."
