@@ -32,8 +32,8 @@ export default function findDuplicates(t: Tree, opts?: Options): Set<FlatTree>[]
     ...opts,
   };
   const flatTree = flattenTree(t);
-  const checked: FlatTree[] = [];
-  const duplicates: Set<FlatTree>[] = [];
+  const checked: Map<string, FlatTree> = new Map();
+  const duplicates: Map<string, Set<FlatTree>> = new Map();
 
   for (const node of flatTree) {
     if (isIgnored(node, opts))
@@ -41,24 +41,23 @@ export default function findDuplicates(t: Tree, opts?: Options): Set<FlatTree>[]
       continue;
 
     const id = idGen(node, finalOpts);
-    const checkedWithThisHash = checked[id];
+    const checkedWithThisHash = checked.get(id);
 
     if (checkedWithThisHash !== undefined) {
-      let duplicatesSet = duplicates[node.hash];
-      const existsDuplicatesSet = duplicatesSet !== undefined;
+      let duplicatesSet = duplicates.get(node.hash);
 
-      if (!existsDuplicatesSet) {
+      if (duplicatesSet === undefined) {
         duplicatesSet = new Set<FlatTree>();
-        duplicates[id] = duplicatesSet;
+        duplicates.set(id, duplicatesSet);
         duplicatesSet.add(checkedWithThisHash);
       }
 
       duplicatesSet.add(node);
     } else
-      checked[id] = node;
+      checked.set(id, node);
   }
 
-  return duplicates;
+  return Array.from(duplicates.values());
 }
 
 function isIgnored(node: Tree, opts?: Options): boolean {

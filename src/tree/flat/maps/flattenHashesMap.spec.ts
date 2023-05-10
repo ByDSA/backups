@@ -1,6 +1,7 @@
-import { N1, N1DUP, R1_CHILDREN_N1_N1DUP } from "@tests/trees";
+import { N1, N1DUP, R1_CHILDREN_N1_N1DUP } from "#tests/trees";
 import flattenNode from "../flattenNode";
-import flattenHashesMap, { HashesMap } from "./flattenHashesMap";
+import flattenHashesMap from "./flattenHashesMap";
+import { HashesMap } from "./types";
 
 it("one node", () => {
   const nodeWithoutChildrenFlat = flattenNode(N1);

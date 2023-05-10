@@ -6,7 +6,8 @@ type Options = {
   followISOs?: boolean;
 };
 
-// TODO: dont follow ISOs (en archivo de configuración se podrá determinar qué ISOs concretos con regex).
+// TODO: dont follow ISOs
+// (en archivo de configuración se podrá determinar qué ISOs concretos con regex).
 
 export default Options;
 

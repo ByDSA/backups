@@ -1,5 +1,5 @@
 import path from "path";
-import { getMainDir } from "./node";
+import getMainDir from "./node";
 
 it("getPkgJsonDir", () => {
   const expected = path.resolve(__dirname, "../..");

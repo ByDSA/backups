@@ -1,8 +1,8 @@
-import { cmd } from "@app/cmd";
-import { Tree } from "@app/tree";
 import chalk from "chalk";
 import { existsSync } from "fs";
 import { basename } from "path";
+import { cmd } from "~/cmd";
+import { Tree } from "~/tree";
 
 type Options = {
   tree?: Tree;

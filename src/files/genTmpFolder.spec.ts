@@ -1,4 +1,4 @@
-import { mkTmpDir, testsTmpDir } from "@tests/index";
+import { mkTmpDir, testsTmpDir } from "#tests/index";
 import { existsSync } from "fs";
 import path from "path";
 import { rm } from ".";

@@ -1,4 +1,4 @@
-import { Tree } from "@app/tree";
+import { Tree } from "~/tree";
 
 export * from "./mocks";
 

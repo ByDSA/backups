@@ -1,10 +1,10 @@
-import { rm } from "@app/files";
-import { mountISO, umountISO } from "@app/iso";
 import { Dirent, lstatSync, readdirSync } from "fs";
 import { basename, dirname, resolve } from "path";
-import { calculateHashOfBranches as calculateHashOfChildren, calculateSizeOfBranches as calculateSizeOfChildren } from "../branches";
+import { rm } from "~/files";
+import { mountISO, umountISO } from "~/iso";
 import Tree from "../Tree";
-import Options, { DEFAULT as DEFAULT_OPTIONS } from "./Options";
+import { calculateHashOfBranches as calculateHashOfChildren, calculateSizeOfBranches as calculateSizeOfChildren } from "../branches";
+import Options, { DEFAULT as DEFAULT_OPTIONS } from "./types/Options";
 import { checkFolderOrFileIsValid, getTreeAt, getTreeBesideAt, getTreeFromNormalFileAsync, isISOFile, isPathInMountedDevice } from "./utils";
 
 export default class FindTreeProcess {

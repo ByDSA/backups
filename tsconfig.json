@@ -2,9 +2,8 @@
   "compileOnSave": true,
   "compilerOptions": {
     "strict": true,
-    "noImplicitAny": false,
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./build",
     "sourceMap": true,
     "inlineSources": true,
     "downlevelIteration": true,
@@ -14,30 +13,17 @@
     "esModuleInterop": true,
     "importHelpers": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "noImplicitAny": true,
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2022", "dom"],
     "baseUrl": ".",
     "paths": {
-      "@app/*": ["src/*"],
-      "@tests/*": ["tests/*"],
+      "~/*": ["src/*"],
+      "#tests/*": ["tests/*"]
     }
   },
-  "include": [
-    "src/**/*.ts", "tests/**/*.ts",
-  ],
-  "types": [
-    "node"
-  ],
-  "typeRoots": [
-    "../node_modules/@types"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "typeRoots": ["../node_modules/@types"],
+  "exclude": ["node_modules"],
+  "types": ["node"]
 }

@@ -1,8 +1,7 @@
-import { readTree, saveTree, Tree } from "@app/tree";
-import joinTrees from "@app/tree/joinTrees";
 import chalk from "chalk";
 import { basename } from "path";
 import yargs, { Arguments } from "yargs";
+import { Tree, joinTrees, readTree, saveTree } from "~/tree";
 
 export default function command() {
   return yargs.command("join [input..]", "Tree comparator", builder, handler);

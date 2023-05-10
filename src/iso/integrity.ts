@@ -1,5 +1,5 @@
-import { isEqualDir, rm } from "@app/files";
 import chalk from "chalk";
+import { isEqualDir, rm } from "~/files";
 import mount, { umount } from "./mount";
 
 export default function integrity(inputFolder: string, outputISO: string) {

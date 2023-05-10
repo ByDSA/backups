@@ -27,3 +27,7 @@ export function rm(p: string) {
 export {
   default as genTmpFolder,
 } from "./genTmpFolder";
+
+export {
+  hashFileStream,
+} from "./hash";

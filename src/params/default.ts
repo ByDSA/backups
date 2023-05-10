@@ -1,9 +1,9 @@
-import { checkAfter } from "@app/check";
-import { ConfigWithOut } from "@app/Config";
-import { Type } from "@app/type";
-import { fetchPackageJson } from "@app/utils/node";
 import chalk from "chalk";
 import yargs, { Arguments } from "yargs";
+import { ConfigWithOut } from "~/Config";
+import { checkAfter } from "~/check";
+import { Type } from "~/type";
+import { fetchPackageJson } from "~/utils/node";
 import { calculateOutputFileName, deleteBaseSource, makeBackupAsync, removePreviousIfNeeded } from "..";
 
 export default function command() {

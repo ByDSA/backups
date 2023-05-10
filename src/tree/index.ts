@@ -1,6 +1,19 @@
 export {
+  default as Tree,
+  TreeWithoutChildren,
+} from "./Tree";
+
+export {
+  calculateSizeOfBranches,
+} from "./branches";
+
+export {
   default as compareTree, isEqual as isTreeEqual,
 } from "./compare";
+
+export {
+  default as findDuplicates,
+} from "./findDuplicates";
 
 export {
   default as generateTree,
@@ -11,14 +24,13 @@ export {
 } from "./isTree";
 
 export {
+  default as joinTrees,
+} from "./joinTrees";
+
+export {
   default as readTree,
 } from "./read";
 
 export {
   default as saveTree,
 } from "./save";
-
-export {
-  default as Tree,
-  TreeWithoutChildren,
-} from "./Tree";

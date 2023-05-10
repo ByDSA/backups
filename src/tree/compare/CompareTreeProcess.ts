@@ -1,9 +1,10 @@
 import { dirname } from "path";
-import { flattenHashesMap, flattenPathsMap } from "../flat";
-import { toPathsMap } from "../maps";
 import Tree from "../Tree";
-import Difference from "./Difference";
+import { flattenHashesMap, flattenPathsMap } from "../flat";
+import { HashesMap, PathsMap } from "../flat/maps/types";
+import { toPathsMap } from "../maps";
 import Options, { DEFAULT_OPTIONS } from "./Options";
+import Difference from "./types/Difference";
 import { genIsFolderObj, ignoreListContains } from "./utils";
 
 type ProcessFromDifferenceOpts = {
@@ -19,13 +20,13 @@ type ProcessToDifferenceOpts = {
 type ProcessFromToDifferenceOpts = ProcessFromDifferenceOpts & ProcessToDifferenceOpts;
 
 export default class CompareTreeProcess {
-  private flatPathMap1;
+  private flatPathMap1?: PathsMap;
 
-  private flatPathMap2;
+  private flatPathMap2?: PathsMap;
 
-  private flatHashesMap1;
+  private flatHashesMap1?: HashesMap;
 
-  private flatHashesMap2;
+  private flatHashesMap2?: HashesMap;
 
   private pathsMap1: Map<string, Tree>;
 
@@ -41,9 +42,11 @@ export default class CompareTreeProcess {
 
   private ignoredDelete: string[];
 
-  constructor(private previousTree: Tree,
+  constructor(
+    private previousTree: Tree,
     private afterTree: Tree,
-    private opts?: Options) {
+    private opts?: Options,
+  ) {
     this.opts = {
       ...DEFAULT_OPTIONS,
       ...this.opts,
@@ -70,6 +73,9 @@ export default class CompareTreeProcess {
 
   process(): Difference[] {
     this.calculateMaps();
+
+    if (!this.flatHashesMap2)
+      throw new Error("flatHashesMap2 is undefined");
 
     for (const pair of this.pathsMap1) {
       const from = pair[0];
@@ -149,11 +155,7 @@ export default class CompareTreeProcess {
   }
 
   private processDeletedDifference( { from, isFolder }: ProcessFromDifferenceOpts) {
-    if (ignoreListContains(this.ignoredDelete, from))
-      return;
-
-    if (isFolder && false) // TODO
-      this.ignoredDelete.push(from);
+    if (ignoreListContains(this.ignoredDelete, from)) { /* empty */ }
 
     this.addDifference( {
       type: "deleted",

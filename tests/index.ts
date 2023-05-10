@@ -1,6 +1,6 @@
-import { getMainDir } from "@app/utils/node";
 import { mkdirSync } from "fs";
 import path from "path";
+import getMainDir from "~/utils/node";
 
 export function treeDir() {
   return path.resolve(testsTmpDir(), "tree");

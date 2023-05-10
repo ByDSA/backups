@@ -1,4 +1,4 @@
-import { R1, R1_CHILDREN_N1_N2, removeChildren } from "@tests/trees";
+import { R1, R1_CHILDREN_N1_N2, removeChildren } from "#tests/trees";
 import flattenNode from "./flattenNode";
 import FlatTree from "./FlatTree";
 

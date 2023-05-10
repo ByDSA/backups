@@ -1,5 +1,5 @@
 import findTreeAsync from "./findTree";
-import Options from "./findTree/Options";
+import Options from "./findTree/types/Options";
 import saveTree from "./save";
 import Tree from "./Tree";
 

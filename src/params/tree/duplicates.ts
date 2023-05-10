@@ -1,7 +1,6 @@
-import { readTree } from "@app/tree";
-import findDuplicates from "@app/tree/findDuplicates";
 import chalk from "chalk";
 import yargs, { Arguments } from "yargs";
+import { findDuplicates, readTree } from "~/tree";
 
 export default function command() {
   return yargs.command("dup [input]", "Tree find duplicates", builder, handler);

@@ -1,8 +1,8 @@
-import { compareTree, readTree, Tree } from "@app/tree";
-import { Difference } from "@app/tree/compare";
-import { getTreeAt } from "@app/tree/findTree/utils";
 import chalk from "chalk";
 import yargs, { Arguments } from "yargs";
+import { compareTree, readTree, Tree } from "~/tree";
+import { Difference } from "~/tree/compare/types";
+import { getTreeAt } from "~/tree/findTree/utils";
 
 export default function command() {
   return yargs.command("compare [input1] [input2]", "Tree comparator", builder, handler);
