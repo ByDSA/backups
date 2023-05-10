@@ -1,15 +1,15 @@
 import { mkdirSync } from "fs";
-import path from "path";
+import { resolve } from "path";
 import getMainDir from "~/utils/node";
 
 export function treeDir() {
-  return path.resolve(testsTmpDir(), "tree");
+  return resolve(testsTmpDir(), "tree");
 }
 
 export function testsTmpDir() {
   const DIR_BASE = getMainDir();
 
-  return path.resolve(DIR_BASE, "tmp");
+  return resolve(DIR_BASE, "tmp");
 }
 
 export function mkTmpDir() {

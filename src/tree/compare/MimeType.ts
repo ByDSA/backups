@@ -6,7 +6,7 @@ enum MimeType {
   NOT_EXISTS = "inode/x-empty",
   EMPTY = "inode/x-empty",
   PNG = "image/png",
-  BMP = "image/x-ms-bmp",
+  BMP = "image/bmp",
 }
 
 export default MimeType;
