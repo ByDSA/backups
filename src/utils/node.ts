@@ -1,8 +1,7 @@
 import { existsSync, readFileSync } from "fs";
 import { dirname, resolve } from "path";
 
-/* eslint-disable import/prefer-default-export */
-export function getMainDir() {
+export default function getMainDir() {
   const possiblePaths = module.paths.filter((p) => p.endsWith("node_modules"));
 
   for (const p of possiblePaths) {

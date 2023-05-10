@@ -1,7 +1,7 @@
-import { generateTree } from "@app/tree";
 import chalk from "chalk";
 import path, { basename, dirname } from "path";
 import yargs, { Arguments } from "yargs";
+import { generateTree } from "~/tree";
 
 export default function command() {
   return yargs.command("gen [input]", "Tree generator", builder, handler);

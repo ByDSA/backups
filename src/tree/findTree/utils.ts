@@ -1,8 +1,8 @@
-import { hashFileStream } from "@app/files/hash";
-import { isMountPoint } from "@app/iso/mount";
 import { existsSync, lstatSync } from "fs";
 import path, { basename, dirname } from "path";
 import sha256File from "sha256-file";
+import { hashFileStream } from "~/files";
+import { isMountPoint } from "~/iso";
 import { Tree } from "..";
 import readTree from "../read";
 

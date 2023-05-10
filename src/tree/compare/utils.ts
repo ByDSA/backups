@@ -1,5 +1,5 @@
 import { basename } from "path";
-import Difference from "./Difference";
+import Difference from "./types/Difference";
 
 export function ignoreListContains(ignoreList: string[], p: string): boolean {
   for (const s of ignoreList) {

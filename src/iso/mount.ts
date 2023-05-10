@@ -1,8 +1,8 @@
-import { cmd } from "@app/cmd";
-import { genTmpFolder, rm } from "@app/files";
 import chalk from "chalk";
 import { existsSync } from "fs";
 import { basename, dirname } from "path";
+import { cmd } from "~/cmd";
+import { genTmpFolder, rm } from "~/files";
 
 type Options = {
   folder?: string;

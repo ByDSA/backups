@@ -1,4 +1,4 @@
-import { testsTmpDir } from "@tests/index";
+import { testsTmpDir } from "#tests/index";
 import { writeFileSync } from "fs";
 import path from "path";
 import sha256File from "sha256-file";

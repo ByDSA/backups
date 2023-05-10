@@ -15,7 +15,7 @@ export const hashString = (str: string, options = {
   return hashHex;
 };
 
-export const hashObject = (obj, options) => {
+export const hashObject = (obj: any, options: any) => {
   const objText = JSON.stringify(obj);
 
   return hashString(objText, options);

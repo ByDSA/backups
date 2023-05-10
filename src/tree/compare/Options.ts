@@ -1,4 +1,4 @@
-import Difference from "./Difference";
+import Difference from "./types/Difference";
 import { show } from "./utils";
 
 type DifferenceCallBack = (difference: Difference)=> void;

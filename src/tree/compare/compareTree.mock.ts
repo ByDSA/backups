@@ -1,4 +1,4 @@
-import { N1, N1DUP, N2, R1 } from "@tests/trees";
+import { N1, N1DUP, N2, R1 } from "#tests/trees";
 import Tree from "../Tree";
 
 export const TREE_COMPARE1_BASE: Tree = Object.freeze( {

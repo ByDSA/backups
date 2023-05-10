@@ -1,6 +1,13 @@
+# dev
 node_modules/
 /coverage/
-/docs/
-.env
-/dist/
+/build/
+
+# tests
 /tmp/
+
+# keys
+.env
+.env.*
+
+/docs/

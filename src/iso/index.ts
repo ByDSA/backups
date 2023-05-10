@@ -27,6 +27,6 @@ export {
 } from "./make";
 
 export {
-  default as mountISO,
+  isMountPoint, default as mountISO,
   umount as umountISO,
 } from "./mount";

@@ -1,5 +1,20 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-npm run lint:fix
-npm run test:coverage
+. "$(dirname -- "$0")/guard_current_branch.sh"
+
+changed_files=$(git diff --cached --name-only HEAD --diff-filter=d)
+eslint_files=$(echo "$changed_files" | grep -E "(.*).(js|ts|jsx|tsx)$" | xargs)
+prettier_files=$(echo "$changed_files" | grep -E "(.*).(json|jsonc|scss|yml)$" | xargs)
+
+# shellcheck disable=SC2086
+if [ -n "$eslint_files" ]; then
+  npx eslint --fix $eslint_files
+  git add $eslint_files
+fi
+
+# shellcheck disable=SC2086
+if [ -n "$prettier_files" ]; then
+  npx prettier --write $prettier_files
+  git add $prettier_files
+fi

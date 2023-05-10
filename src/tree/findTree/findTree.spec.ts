@@ -1,6 +1,6 @@
-import FilesMock from "@tests/FilesMock";
-import { treeDir } from "@tests/index";
-import { genFileMock1 } from "@tests/trees";
+import FilesMock from "#tests/FilesMock";
+import { treeDir } from "#tests/index";
+import { genFileMock1 } from "#tests/trees";
 import findTreeAsync from ".";
 import Tree from "../Tree";
 

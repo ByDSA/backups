@@ -1,5 +1,4 @@
-import { Tree, TreeWithoutChildren } from "@app/tree";
-import { calculateSizeOfBranches } from "@app/tree/branches";
+import { Tree, TreeWithoutChildren, calculateSizeOfBranches } from "~/tree";
 
 function createNode(n: number): TreeWithoutChildren {
   return Object.freeze( {
