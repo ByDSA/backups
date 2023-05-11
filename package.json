@@ -57,7 +57,7 @@
     "typescript": "5.0.4"
   },
   "dependencies": {
-    "chalk": "5.2.0",
+    "chalk": "4.1.2",
     "deasync": "0.1.28",
     "sha256-file": "1.0.0",
     "synchronized-promise": "0.3.1",
