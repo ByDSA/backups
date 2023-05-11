@@ -26,7 +26,7 @@ assert_valid_current_branch() {
   local current_branch
   current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-  local match='^((fix)|(feat)|(chore))(\((.+)\))?\/(.+)$'
+  local match='^((fix)|(feat)|(chore)|(docs))(\((.+)\))?\/(.+)$'
 
   if ! (echo "$current_branch" | grep -Eq "$match"); then
     fatal_error "No se puede editar diréctamente la rama $current_branch. El nombre de la rama debe cumplir el siguiente patrón: $match"
