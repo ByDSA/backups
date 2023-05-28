@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/ByDSA/backups/compare/v1.0.1...v1.1.0) (2023-05-28)
+
+
+### Features
+
+* compatibilidad con symlink ([c757f1d](https://github.com/ByDSA/backups/commit/c757f1d4965cc482bda494ff05bd7b0be63c1434))
+
 ### 1.0.1 (2023-05-10)
 
 
