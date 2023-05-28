@@ -1,5 +1,5 @@
 import { flattenTree, FlatTree } from "./flat";
-import Tree from "./Tree";
+import Tree, { isTreeNormal, isTreeSymlink } from "./Tree";
 
 type Options = {
   consider?: {
@@ -36,7 +36,7 @@ export default function findDuplicates(t: Tree, opts?: Options): Set<FlatTree>[]
   const duplicates: Map<string, Set<FlatTree>> = new Map();
 
   for (const node of flatTree) {
-    if (isIgnored(node, opts))
+    if (isIgnored(node, opts) || isTreeSymlink(node))
       // eslint-disable-next-line no-continue
       continue;
 
@@ -61,7 +61,7 @@ export default function findDuplicates(t: Tree, opts?: Options): Set<FlatTree>[]
 }
 
 function isIgnored(node: Tree, opts?: Options): boolean {
-  if (!opts?.consider?.empty && node.size === 0)
+  if (isTreeSymlink(node) || (!opts?.consider?.empty && node.size === 0))
     return true;
 
   return false;
@@ -70,7 +70,7 @@ function isIgnored(node: Tree, opts?: Options): boolean {
 function idGen(node: Tree, opts?: Options) {
   let id = "";
 
-  if (opts?.consider?.hash)
+  if (opts?.consider?.hash && isTreeNormal(node))
     id += node.hash;
 
   if (opts?.consider?.modificatedAt)
@@ -82,7 +82,7 @@ function idGen(node: Tree, opts?: Options) {
   if (opts?.consider?.name)
     id += node.name;
 
-  if (opts?.consider?.size)
+  if (opts?.consider?.size && isTreeNormal(node))
     id += node.size;
 
   if (opts?.consider?.children && node.children) {

@@ -1,9 +1,10 @@
-import { existsSync, lstatSync } from "fs";
+import { Stats, existsSync, lstatSync, realpathSync } from "fs";
 import path, { basename, dirname } from "path";
 import sha256File from "sha256-file";
 import { hashFileStream } from "~/files";
 import { isMountPoint } from "~/iso";
 import { Tree } from "..";
+import { BaseTreeWithoutChildren } from "../Tree";
 import readTree from "../read";
 
 export function checkFolderOrFileIsValid(folder: string) {
@@ -67,20 +68,41 @@ export async function calcHashFromFileAsync(fileFullpath: string) {
 }
 
 export async function getTreeFromNormalFileAsync(fullpath: string): Promise<Tree> {
+  const { base, stats } = getTreeFromAnyFile(fullpath);
+  const hash = await calcHashFromFileAsync(fullpath);
+
+  return {
+    ...base,
+    size: stats.size,
+    hash,
+  };
+}
+
+// eslint-disable-next-line require-await
+export async function getTreeFromSymlink(fullpath: string): Promise<Tree> {
+  const { base } = getTreeFromAnyFile(fullpath);
+  const targetPath = realpathSync(fullpath);
+
+  return {
+    ...base,
+    target: targetPath,
+  };
+}
+
+type GetTreeFromAnyFileRet = {base: BaseTreeWithoutChildren; stats: Stats};
+function getTreeFromAnyFile(fullpath: string): GetTreeFromAnyFileRet {
   console.log(`Reading file ${fullpath} ...`);
   const stats = lstatSync(fullpath);
-  const baseNode = {
+  const baseNode: BaseTreeWithoutChildren = {
     name: basename(fullpath),
     modificatedAt: stats.mtimeMs / 1000,
     createdAt: stats.ctimeMs / 1000,
     accessedAt: stats.atimeMs / 1000,
   };
-  const hash = await calcHashFromFileAsync(fullpath);
 
   return {
-    ...baseNode,
-    size: stats.size,
-    hash,
+    base: baseNode,
+    stats,
   };
 }
 

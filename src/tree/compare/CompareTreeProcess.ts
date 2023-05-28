@@ -1,5 +1,5 @@
 import { dirname } from "path";
-import Tree from "../Tree";
+import Tree, { isTreeSymlink } from "../Tree";
 import { flattenHashesMap, flattenPathsMap } from "../flat";
 import { HashesMap, PathsMap } from "../flat/maps/types";
 import { toPathsMap } from "../maps";
@@ -81,6 +81,10 @@ export default class CompareTreeProcess {
       const from = pair[0];
       const prev = pair[1];
       const isFolder = !!prev.children;
+
+      if (isTreeSymlink(prev))
+        // eslint-disable-next-line no-continue
+        continue;
 
       if (!this.pathsMap2.has(from)) { // Deleted, moved or renamed
         const afterNodesWithPrevNodeHash = this.flatHashesMap2.get(prev.hash);

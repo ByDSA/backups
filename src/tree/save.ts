@@ -1,12 +1,13 @@
-import { writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
+import { join } from "path";
 import Tree from "./Tree";
 
-const V0_0_1 = "0.0.1";
-const LATEST_VERSION = V0_0_1;
+const packageJson = JSON.parse(readFileSync(join(__dirname, "..", "..", "package.json")).toString());
+const VERSION = packageJson.version;
 
 export default function saveTree(tree: Tree, p: string) {
   const fileJson = {
-    version: LATEST_VERSION,
+    version: VERSION,
     content: tree,
   };
 

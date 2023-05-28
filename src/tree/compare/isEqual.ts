@@ -1,6 +1,6 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import Tree from "../Tree";
+import Tree, { isTreeNormal, isTreeSymlink } from "../Tree";
 
 export type Options = {
   level: number;
@@ -17,6 +17,9 @@ export default function isEqual(t1: Tree, t2: Tree, opts?: Options): boolean {
     ...opts,
   };
 
+  if ((isTreeNormal(t1) && isTreeSymlink(t2)) || (isTreeNormal(t2) && isTreeSymlink(t1)))
+    return false;
+
   if (((finalOpts.level === 0 && !finalOpts.ignoreTimesLevel0)
     || finalOpts.level > 0)) {
     if (t1.createdAt !== t2.createdAt)
@@ -26,13 +29,18 @@ export default function isEqual(t1: Tree, t2: Tree, opts?: Options): boolean {
       return false;
   }
 
-  if (t1.hash !== t2.hash)
-    return false;
+  if (isTreeNormal(t1) && isTreeNormal(t2)) {
+    if (t1.hash !== t2.hash)
+      return false;
+
+    if (t1.size !== t2.size)
+      return false;
+  } else if (isTreeSymlink(t1) && isTreeSymlink(t2)) {
+    if (t1.target !== t2.target)
+      return false;
+  }
 
   if (t1.name !== t2.name)
-    return false;
-
-  if (t1.size !== t2.size)
     return false;
 
   if (xor(t1.children === undefined, t2.children === undefined)
