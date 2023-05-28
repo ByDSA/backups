@@ -1,11 +1,12 @@
 import crypto from "crypto";
-import Tree from "./Tree";
+import Tree, { TreeNormal, isTreeNormal } from "./Tree";
 
 export function calculateSizeOfBranches(branches: Tree[]) {
   let size = 0;
 
   branches.forEach((n) => {
-    size += n.size;
+    if (isTreeNormal(n))
+      size += n.size;
   } );
 
   return size;
@@ -20,7 +21,8 @@ function createSha256CspHash(content: string) {
 
 export function calculateHashOfBranches(branches: Tree[]) {
   const joinedHashes = branches
-    .map((n) => n.hash)
+    .filter((n) => isTreeNormal(n))
+    .map((n) => (n as TreeNormal).hash)
     .sort()
     .join();
 

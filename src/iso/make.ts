@@ -3,6 +3,8 @@ import { existsSync } from "fs";
 import { basename } from "path";
 import { cmd } from "~/cmd";
 import { Tree } from "~/tree";
+// eslint-disable-next-line import/no-internal-modules
+import { isTreeNormal } from "~/tree/Tree";
 
 type Options = {
   tree?: Tree;
@@ -62,7 +64,8 @@ function checkIsISOCreated(outputISO: string) {
 }
 
 function findOneSizeLimitation(tree: Tree): Tree | null {
-  return findOne(tree, (t: Tree) => t.children === undefined && t.size >= 4 * 1024 ** 3);
+  return findOne(tree, (t: Tree) => t.children === undefined
+  && isTreeNormal(t) && t.size >= 4 * 1024 ** 3);
 }
 
 function findOneLengthLimitation(tree: Tree): Tree | null {

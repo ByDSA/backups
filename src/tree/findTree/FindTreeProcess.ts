@@ -5,7 +5,7 @@ import { mountISO, umountISO } from "~/iso";
 import Tree from "../Tree";
 import { calculateHashOfBranches as calculateHashOfChildren, calculateSizeOfBranches as calculateSizeOfChildren } from "../branches";
 import Options, { DEFAULT as DEFAULT_OPTIONS } from "./types/Options";
-import { checkFolderOrFileIsValid, getTreeAt, getTreeBesideAt, getTreeFromNormalFileAsync, isISOFile, isPathInMountedDevice } from "./utils";
+import { checkFolderOrFileIsValid, getTreeAt, getTreeBesideAt, getTreeFromNormalFileAsync, getTreeFromSymlink as getTreeFromSymlinkAsync, isISOFile, isPathInMountedDevice } from "./utils";
 
 export default class FindTreeProcess {
   private opts: Options;
@@ -95,6 +95,9 @@ export default class FindTreeProcess {
   private dirent2TreeAsync(d: Dirent): Promise<Tree> {
     const fullpath = resolve(<string> this.currentFolder, d.name);
 
+    if (d.isSymbolicLink())
+      return getTreeFromSymlinkAsync(fullpath);
+
     if (d.isFile()) {
       if (isISOFile(d.name))
         return this.getTreeFromISOAsync(fullpath);
@@ -116,9 +119,6 @@ export default class FindTreeProcess {
 
     if (d.isSocket())
       throw new Error(`'${fullpath}' is Socket.`);
-
-    if (d.isSymbolicLink())
-      throw new Error(`'${fullpath}' is Symbolic Link.`);
 
     throw new Error(`Unexpected error processing '${fullpath}'`);
   }

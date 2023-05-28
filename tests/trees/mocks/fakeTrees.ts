@@ -1,6 +1,8 @@
-import { Tree, TreeWithoutChildren, calculateSizeOfBranches } from "~/tree";
+import { Tree, calculateSizeOfBranches } from "~/tree";
+// eslint-disable-next-line import/no-internal-modules
+import { TreeNormal } from "~/tree/Tree";
 
-function createNode(n: number): TreeWithoutChildren {
+function createNode(n: number): TreeNormal {
   return Object.freeze( {
     size: n * 123,
     name: `node${n}`,
@@ -9,22 +11,22 @@ function createNode(n: number): TreeWithoutChildren {
     hash: `fakeHashNode${n}`,
   } );
 }
-function createNodeDup(n: number): TreeWithoutChildren {
+function createNodeDup(n: number): TreeNormal {
   return Object.freeze( {
     ...createNode(n),
     name: `node${n}Dup`,
   } );
 }
 
-export const N1: TreeWithoutChildren = createNode(1);
+export const N1: TreeNormal = createNode(1);
 
-export const N2: TreeWithoutChildren = createNode(2);
+export const N2: TreeNormal = createNode(2);
 
-export const N3: TreeWithoutChildren = createNode(2);
+export const N3: TreeNormal = createNode(2);
 
-export const N1DUP: TreeWithoutChildren = createNodeDup(1);
+export const N1DUP: TreeNormal = createNodeDup(1);
 
-export const R1: TreeWithoutChildren = Object.freeze( {
+export const R1: TreeNormal = Object.freeze( {
   ...N1,
   name: "root",
   hash: "fakeHashRoot1",
