@@ -20,17 +20,22 @@ export function calculateOutputFolder( { input }: Config) {
   return dirname(input);
 }
 
-export function removePreviousIfNeeded( { force, outFolder }: ConfigWithOut) {
-  if (force)
-    rm(outFolder);
+export function removePreviousIfNeeded( { force, outName }: ConfigWithOut) {
+  if (force && outName)
+    rm(outName);
 }
 
-export async function makeBackupAsync( { input, outFolder, type, deleteTreeAfter }: ConfigWithOut) {
+export async function makeBackupAsync( { input,
+  outFolder,
+  type,
+  deleteTreeAfter,
+  dontFollowISOs }: ConfigWithOut) {
   console.log("Generating tree...");
   const treeOutPath = path.resolve(input, "index.tree");
   const tree = await generateTree( {
     folder: input,
     out: treeOutPath,
+    followISOs: !dontFollowISOs,
   } );
 
   switch (type) {
