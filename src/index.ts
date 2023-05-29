@@ -6,7 +6,9 @@ import { calculateOutputISOFileName, makeISO } from "./iso";
 import { generateTree } from "./tree";
 import { Type } from "./type";
 
-export function calculateOutputFileName( { outFolder, input, type }: ConfigWithOut) {
+export function calculateOutputFileName( { outFolder,
+  input,
+  type }: Config & { outFolder: string } ) {
   switch (type) {
     case Type.ISO: return calculateOutputISOFileName( {
       outFolder,
@@ -25,11 +27,16 @@ export function removePreviousIfNeeded( { force, outName }: ConfigWithOut) {
     rm(outName);
 }
 
+type MakeBackupParams = ConfigWithOut & {
+  outFolder: string;
+  outName: string;
+};
 export async function makeBackupAsync( { input,
   outFolder,
+  outName,
   type,
   deleteTreeAfter,
-  dontFollowISOs }: ConfigWithOut) {
+  dontFollowISOs }: MakeBackupParams) {
   console.log("Generating tree...");
   const treeOutPath = path.resolve(input, "index.tree");
   const tree = await generateTree( {
@@ -37,9 +44,10 @@ export async function makeBackupAsync( { input,
     out: treeOutPath,
     followISOs: !dontFollowISOs,
   } );
+  const outFilePath = path.join(outFolder, outName);
 
   switch (type) {
-    case Type.ISO: makeISO(input, outFolder, {
+    case Type.ISO: makeISO(input, outFilePath, {
       tree,
     } );
       break;

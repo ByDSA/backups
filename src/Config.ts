@@ -14,4 +14,5 @@ export type Config = {
 
 export type ConfigWithOut = Config & {
     outFolder: string;
+    outName: string;
 };

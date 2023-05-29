@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import yargs, { Arguments } from "yargs";
-import { ConfigWithOut } from "~/Config";
+import { Config, ConfigWithOut } from "~/Config";
 import { checkAfter } from "~/check";
 import { Type } from "~/type";
 import { fetchPackageJson } from "~/utils/node";
@@ -24,8 +24,30 @@ function builder(y: yargs.Argv<{}>) {
   } );
 }
 
+function fixConfig(config: Config): ConfigWithOut {
+  let { outName } = config;
+  const outFolder = config.outFolder ?? calculateOutputFolder(config);
+
+  if (!config.outName) {
+    const configWithOutFolder = config as Config & { outFolder: string };
+
+    outName = calculateOutputFileName(configWithOutFolder);
+  }
+
+  if (!outFolder || !outName)
+    throw new Error("out undefined");
+
+  const ret: ConfigWithOut = {
+    ...config,
+    outFolder,
+    outName,
+  };
+
+  return ret;
+}
+
 async function handler<U>(argv: Arguments<U>) {
-  const config: ConfigWithOut = {
+  const config: Config = {
     input: <string>argv.input,
     outFolder: <string>argv.outFolder,
     outName: <string>argv.outName,
@@ -39,17 +61,13 @@ async function handler<U>(argv: Arguments<U>) {
 
   console.log(chalk.blue(`[Backup: '${config.input}']`));
 
-  if (!config.outName)
-    config.outName = calculateOutputFileName(config);
+  const configWithOut = fixConfig(config);
 
-  if (!config.outFolder)
-    config.outFolder = calculateOutputFolder(config);
+  console.log(configWithOut);
 
-  console.log(config);
+  removePreviousIfNeeded(configWithOut);
 
-  removePreviousIfNeeded(config);
-
-  await makeBackupAsync(config);
+  await makeBackupAsync(configWithOut);
 
   if (config.checkAfter)
     checkAfter(config);
