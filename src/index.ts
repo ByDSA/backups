@@ -21,18 +21,25 @@ export function removePreviousIfNeeded( { force, out }: ConfigWithOut) {
     rm(out);
 }
 
-export async function makeBackupAsync( { input, out, type }: ConfigWithOut) {
+export async function makeBackupAsync( { input, out, type, deleteTreeAfter }: ConfigWithOut) {
   console.log("Generating tree...");
+  const treeOutPath = path.resolve(input, "index.tree");
   const tree = await generateTree( {
     folder: input,
-    out: path.resolve(input, "index.tree"),
+    out: treeOutPath,
   } );
 
   switch (type) {
-    case Type.ISO: return makeISO(input, out, {
+    case Type.ISO: makeISO(input, out, {
       tree,
     } );
+      break;
     default: throw new Error("Type invalid");
+  }
+
+  if (deleteTreeAfter) {
+    console.log("Deleting tree...");
+    rm(treeOutPath);
   }
 }
 

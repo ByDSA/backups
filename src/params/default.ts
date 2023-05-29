@@ -32,6 +32,7 @@ async function handler<U>(argv: Arguments<U>) {
     checkAfter: !!argv.checkAfter,
     deleteAfter: !!argv.deleteAfter,
     type: <Type>argv.type,
+    deleteTreeAfter: !!argv.deleteTreeAfter,
   };
 
   console.log(chalk.blue(`[Backup: '${config.input}']`));
@@ -86,6 +87,11 @@ function optionParams(y: yargs.Argv<{}>) {
       alias: "d",
       boolean: true,
       describe: "Delete the original sources after the backup is done",
+    } )
+    .option("deleteTreeAfter", {
+      alias: "l",
+      boolean: true,
+      describe: "Delete generated tree from the original sources after the backup is done",
     } )
     .option("type", {
       alias: "t",
