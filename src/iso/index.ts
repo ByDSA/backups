@@ -1,21 +1,11 @@
-import { existsSync, lstatSync } from "fs";
-import { basename, dirname } from "path";
+import { basename } from "path";
 import { getDateTimestamp } from "../timestamp";
 
-type Params = { input: string; out?: string };
-export function calculateOutput( { input, out }: Params) {
+type Params = { input: string; outFolder?: string };
+export function calculateOutputISOFileName( { input }: Params) {
   const TIMESTAMP = getDateTimestamp();
-  let OUT_FOLDER: string = "";
 
-  if (out && !lstatSync(out).isDirectory()) {
-    if (existsSync(out))
-      OUT_FOLDER = out;
-    else if (existsSync(dirname(out)))
-      OUT_FOLDER = dirname(out);
-  } else
-    OUT_FOLDER = dirname(input);
-
-  return `${OUT_FOLDER}/${basename(input)} [${TIMESTAMP}].iso`;
+  return `${basename(input)} [${TIMESTAMP}].iso`;
 }
 
 export {

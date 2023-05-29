@@ -1,27 +1,31 @@
 import chalk from "chalk";
-import path from "path";
+import path, { dirname } from "path";
 import { Config, ConfigWithOut } from "./Config";
 import { rm } from "./files";
-import { calculateOutput as calculateOutputISOFileName, makeISO } from "./iso";
+import { calculateOutputISOFileName, makeISO } from "./iso";
 import { generateTree } from "./tree";
 import { Type } from "./type";
 
-export function calculateOutputFileName( { out, input, type }: ConfigWithOut) {
+export function calculateOutputFileName( { outFolder, input, type }: ConfigWithOut) {
   switch (type) {
     case Type.ISO: return calculateOutputISOFileName( {
-      out,
+      outFolder,
       input,
     } );
     default: return "";
   }
 }
 
-export function removePreviousIfNeeded( { force, out }: ConfigWithOut) {
-  if (force)
-    rm(out);
+export function calculateOutputFolder( { input }: Config) {
+  return dirname(input);
 }
 
-export async function makeBackupAsync( { input, out, type, deleteTreeAfter }: ConfigWithOut) {
+export function removePreviousIfNeeded( { force, outFolder }: ConfigWithOut) {
+  if (force)
+    rm(outFolder);
+}
+
+export async function makeBackupAsync( { input, outFolder, type, deleteTreeAfter }: ConfigWithOut) {
   console.log("Generating tree...");
   const treeOutPath = path.resolve(input, "index.tree");
   const tree = await generateTree( {
@@ -30,7 +34,7 @@ export async function makeBackupAsync( { input, out, type, deleteTreeAfter }: Co
   } );
 
   switch (type) {
-    case Type.ISO: makeISO(input, out, {
+    case Type.ISO: makeISO(input, outFolder, {
       tree,
     } );
       break;

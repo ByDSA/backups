@@ -4,7 +4,7 @@ import { checkIntegrityISO } from "./iso";
 import { Type } from "./type";
 
 // eslint-disable-next-line import/prefer-default-export
-export function checkAfter( { type, input, out }: Config) {
+export function checkAfter( { type, input, outFolder: out }: Config) {
   console.log(chalk.blue("Checking backup integrity ..."));
 
   if (!out)

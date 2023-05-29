@@ -10,9 +10,13 @@ Automáticamente crea el link simbólico de  `/bin/backup` a `build/bin.js`.
 sudo backup "PATH"
 ```
 Admite las siguientes flags:
+- `--outFolder` o `-o`: permite especificar la carpeta donde se guardará el backup. Por defecto es junto a la carpeta de input.
+- `--outName` o `-n`: permite especificar el nombre del archivo de backup. Por defecto es el nombre de la carpeta de input con la fecha (`input [FECHA].iso`).
 - `--force` o `-f`: borra el backup previo antes de generar el nuevo.
 - `--checkAfter` o `-c`: comprueba la integridad del backup después de crearlo. Compara la carpeta vieja con la carpeta raíz del ISO con el comando `diff`.
 - `--deleteAfter` o `-d`: elimina los archivos fuente originales tras hacer el backup.
+- `--deleteTreeAfter` o `-l`: elimina el archivo de árbol generado en los sources tras hacer el backup.
+- `--dontFollowISOs` o `-i`: considerará los archivos ISO como un archivo atómico y no como una carpeta al generar el tree.
 - `--type` o `-t`: permite especificar la forma en que se almacenará el backup. Los tipos soportados son:
   - `iso` (por defecto)
   - De momento no hay más tipos soportados

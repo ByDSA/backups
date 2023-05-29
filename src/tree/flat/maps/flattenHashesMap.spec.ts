@@ -1,4 +1,6 @@
 import { N1, N1DUP, R1_CHILDREN_N1_N1DUP } from "#tests/trees";
+// eslint-disable-next-line import/no-internal-modules
+import { TreeNormal } from "~/tree/Tree";
 import flattenNode from "../flattenNode";
 import flattenHashesMap from "./flattenHashesMap";
 import { HashesMap } from "./types";
@@ -23,7 +25,7 @@ it("root with two duplicated nodes", () => {
       ],
     ],
     [
-      R1_CHILDREN_N1_N1DUP.hash, [
+      (R1_CHILDREN_N1_N1DUP as TreeNormal).hash, [
         rootFlat,
       ],
     ],

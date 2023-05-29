@@ -4,7 +4,7 @@ import { ConfigWithOut } from "~/Config";
 import { checkAfter } from "~/check";
 import { Type } from "~/type";
 import { fetchPackageJson } from "~/utils/node";
-import { calculateOutputFileName, deleteBaseSource, makeBackupAsync, removePreviousIfNeeded } from "..";
+import { calculateOutputFileName, calculateOutputFolder, deleteBaseSource, makeBackupAsync, removePreviousIfNeeded } from "..";
 
 export default function command() {
   yargs.command("$0 [input]", `Backup ${version()}`, builder, handler)
@@ -27,17 +27,24 @@ function builder(y: yargs.Argv<{}>) {
 async function handler<U>(argv: Arguments<U>) {
   const config: ConfigWithOut = {
     input: <string>argv.input,
-    out: <string>argv.out,
+    outFolder: <string>argv.outFolder,
+    outName: <string>argv.outName,
     force: !!argv.force,
     checkAfter: !!argv.checkAfter,
     deleteAfter: !!argv.deleteAfter,
     type: <Type>argv.type,
     deleteTreeAfter: !!argv.deleteTreeAfter,
+    dontFollowISOs: !!argv.dontFollowISOs,
   };
 
   console.log(chalk.blue(`[Backup: '${config.input}']`));
 
-  config.out = calculateOutputFileName(config);
+  if (!config.outName)
+    config.outName = calculateOutputFileName(config);
+
+  if (!config.outFolder)
+    config.outFolder = calculateOutputFolder(config);
+
   console.log(config);
 
   removePreviousIfNeeded(config);
@@ -88,6 +95,11 @@ function optionParams(y: yargs.Argv<{}>) {
       boolean: true,
       describe: "Delete the original sources after the backup is done",
     } )
+    .option("dontFollowISOs", {
+      alias: "i",
+      boolean: true,
+      describe: "Don't follow ISOs when generating the tree",
+    } )
     .option("deleteTreeAfter", {
       alias: "l",
       boolean: true,
@@ -98,6 +110,16 @@ function optionParams(y: yargs.Argv<{}>) {
       describe: "Type of backup",
       choices: ["iso"],
       demandOption: true,
+    } )
+    .option("outFolder", {
+      alias: "o",
+      describe: "Output folder",
+      type: "string",
+    } )
+    .option("outName", {
+      alias: "n",
+      describe: "Name of the backup",
+      type: "string",
     } );
 
   return y;

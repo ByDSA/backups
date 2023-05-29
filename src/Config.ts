@@ -2,14 +2,16 @@ import { Type } from "./type";
 
 export type Config = {
   input: string;
-  out?: string;
+  outName?: string;
+  outFolder?: string;
   force: boolean;
   checkAfter: boolean;
   deleteAfter: boolean;
   type: Type;
   deleteTreeAfter?: boolean;
+  dontFollowISOs?: boolean;
 };
 
 export type ConfigWithOut = Config & {
-    out: string;
+    outFolder: string;
 };
