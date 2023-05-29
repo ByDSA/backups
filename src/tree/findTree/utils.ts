@@ -81,7 +81,11 @@ export async function getTreeFromNormalFileAsync(fullpath: string): Promise<Tree
 // eslint-disable-next-line require-await
 export async function getTreeFromSymlink(fullpath: string): Promise<Tree> {
   const { base } = getTreeFromAnyFile(fullpath);
-  const targetPath = realpathSync(fullpath);
+  let targetPath = "Broken symlink";
+
+  try {
+    targetPath = realpathSync(fullpath);
+  } catch (e) { /* empty */ }
 
   return {
     ...base,
