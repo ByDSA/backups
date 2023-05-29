@@ -28,14 +28,20 @@ function fixConfig(config: Config): ConfigWithOut {
   let { outName } = config;
   const outFolder = config.outFolder ?? calculateOutputFolder(config);
 
+  if (!outFolder)
+    throw new Error("outFolder undefined");
+
   if (!config.outName) {
-    const configWithOutFolder = config as Config & { outFolder: string };
+    const configWithOutFolder = {
+      ...config,
+      outFolder,
+    };
 
     outName = calculateOutputFileName(configWithOutFolder);
   }
 
-  if (!outFolder || !outName)
-    throw new Error("out undefined");
+  if (!outName)
+    throw new Error("outName undefined");
 
   const ret: ConfigWithOut = {
     ...config,
@@ -70,10 +76,10 @@ async function handler<U>(argv: Arguments<U>) {
   await makeBackupAsync(configWithOut);
 
   if (config.checkAfter)
-    checkAfter(config);
+    checkAfter(configWithOut);
 
   if (config.deleteAfter)
-    deleteBaseSource(config);
+    deleteBaseSource(configWithOut);
 }
 
 function versionParam(y: yargs.Argv<{}>) {

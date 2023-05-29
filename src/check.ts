@@ -1,15 +1,18 @@
 import chalk from "chalk";
 import path from "path";
-import { Config } from "./Config";
+import { ConfigWithOut } from "./Config";
 import { checkIntegrityISO } from "./iso";
 import { Type } from "./type";
 
 // eslint-disable-next-line import/prefer-default-export
-export function checkAfter( { type, input, outFolder, outName }: Config) {
+export function checkAfter( { type, input, outFolder, outName }: ConfigWithOut) {
   console.log(chalk.blue("Checking backup integrity ..."));
 
-  if (!outFolder || !outName)
-    throw new Error("out undefined");
+  if (!outFolder)
+    throw new Error("outFolder undefined");
+
+  if (!outName)
+    throw new Error("outName undefined");
 
   const out = path.join(outFolder, outName);
 
