@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/ByDSA/backups/compare/v1.2.0...v1.2.1) (2023-05-29)
+
+
+### Bug Fixes
+
+* dontFollowISOs y force ([7331645](https://github.com/ByDSA/backups/commit/733164580f7115f0989cd431fb434045323b6653))
+
 ## [1.2.0](https://github.com/ByDSA/backups/compare/v1.1.0...v1.2.0) (2023-05-29)
 
 

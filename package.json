@@ -1,6 +1,6 @@
 {
   "name": "backups",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "scripts": {
     "clean": "rm -rf node_modules; pnpm test:coverage:clean; pnpm build:clean;",
