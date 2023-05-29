@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/ByDSA/backups/compare/v1.1.0...v1.2.0) (2023-05-29)
+
+
+### Features
+
+* añadido flags en backups. dontFollowISOs, deleteTreeAfter, outName, outFolder ([5ad96b8](https://github.com/ByDSA/backups/commit/5ad96b8c2ed04d4714a22e7ee901ff8c56528db5))
+* poder eliminar el tree generado original después de hacer el backup ([871f47d](https://github.com/ByDSA/backups/commit/871f47dbd484e0fe93d15fdce83f0786565f7862))
+
+
+### Bug Fixes
+
+* si el symlink está roto, que lo indique en lugar de lanzar una excepción ([dca0563](https://github.com/ByDSA/backups/commit/dca0563556d5cb104e781f562fbbb632be48315c))
+
 ## [1.1.0](https://github.com/ByDSA/backups/compare/v1.0.1...v1.1.0) (2023-05-28)
 
 
