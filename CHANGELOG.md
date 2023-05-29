@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.4](https://github.com/ByDSA/backups/compare/v1.2.3...v1.2.4) (2023-05-29)
+
+
+### Bug Fixes
+
+* eliminar el árbol generado después del check ([af04ebc](https://github.com/ByDSA/backups/commit/af04ebcbe6c15170cd21930ab0ecbfb501b94d59))
+
 ### [1.2.3](https://github.com/ByDSA/backups/compare/v1.2.2...v1.2.3) (2023-05-29)
 
 
