@@ -31,12 +31,14 @@ type MakeBackupParams = ConfigWithOut & {
   outFolder: string;
   outName: string;
 };
+type MakeBackupReturn = {
+  treePath: string;
+};
 export async function makeBackupAsync( { input,
   outFolder,
   outName,
   type,
-  deleteTreeAfter,
-  dontFollowISOs }: MakeBackupParams) {
+  dontFollowISOs }: MakeBackupParams): Promise<MakeBackupReturn> {
   console.log("Generating tree...");
   const treeOutPath = path.resolve(input, "index.tree");
   const tree = await generateTree( {
@@ -54,10 +56,9 @@ export async function makeBackupAsync( { input,
     default: throw new Error("Type invalid");
   }
 
-  if (deleteTreeAfter) {
-    console.log("Deleting tree...");
-    rm(treeOutPath);
-  }
+  return {
+    treePath: treeOutPath,
+  };
 }
 
 export function deleteBaseSource( { input }: Config) {

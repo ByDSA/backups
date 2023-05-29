@@ -5,6 +5,7 @@ import { checkAfter } from "~/check";
 import { Type } from "~/type";
 import { fetchPackageJson } from "~/utils/node";
 import { calculateOutputFileName, calculateOutputFolder, deleteBaseSource, makeBackupAsync, removePreviousIfNeeded } from "..";
+import { rm } from "../files";
 
 export default function command() {
   yargs.command("$0 [input]", `Backup ${version()}`, builder, handler)
@@ -73,13 +74,17 @@ async function handler<U>(argv: Arguments<U>) {
 
   removePreviousIfNeeded(configWithOut);
 
-  await makeBackupAsync(configWithOut);
+  const resultBackup = await makeBackupAsync(configWithOut);
 
-  if (config.checkAfter)
+  if (configWithOut.checkAfter)
     checkAfter(configWithOut);
 
-  if (config.deleteAfter)
+  if (configWithOut.deleteAfter)
     deleteBaseSource(configWithOut);
+  else if (configWithOut.deleteTreeAfter) {
+    console.log(`Deleting tree: ${resultBackup.treePath}`);
+    await rm(resultBackup.treePath);
+  }
 }
 
 function versionParam(y: yargs.Argv<{}>) {
