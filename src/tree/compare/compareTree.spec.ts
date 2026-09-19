@@ -1,7 +1,7 @@
 import { N1DUP } from "#tests/trees";
 import compareTree from ".";
 import { TREE_COMPARE1_ADD_N1DUP, TREE_COMPARE1_BASE, TREE_COMPARE1_DEL_N2, TREE_COMPARE1_REN_N1 } from "./compareTree.mock";
-import Difference from "./types/Difference";
+import type { Difference } from "./types/Difference.js";
 
 describe("all", () => {
   it("deleted", () => {

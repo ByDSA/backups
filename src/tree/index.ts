@@ -1,36 +1,37 @@
-export {
-  default as Tree,
+export type {
+  Tree,
   TreeWithoutChildren,
-} from "./Tree";
+} from "./Tree.js";
 
 export {
   calculateSizeOfBranches,
-} from "./branches";
+} from "./branches.js";
 
 export {
   default as compareTree, isEqual as isTreeEqual,
-} from "./compare";
+// eslint-disable-next-line import/no-internal-modules
+} from "./compare/index.js";
 
 export {
   default as findDuplicates,
-} from "./findDuplicates";
+} from "./findDuplicates.js";
 
 export {
   default as generateTree,
-} from "./generate";
+} from "./generate.js";
 
 export {
   default as isTree,
-} from "./isTree";
+} from "./isTree.js";
 
 export {
   default as joinTrees,
-} from "./joinTrees";
+} from "./joinTrees.js";
 
 export {
   default as readTree,
-} from "./read";
+} from "./read.js";
 
 export {
   default as saveTree,
-} from "./save";
+} from "./save.js";

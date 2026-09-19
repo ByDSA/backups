@@ -1,7 +1,7 @@
-import Tree from "../../Tree";
-import flattenNode from "../flattenNode";
-import FlatTree from "../FlatTree";
-import { Path, PathsMap } from "./types";
+import type { Tree } from "../../Tree.js";
+import flattenNode from "../flattenNode.js";
+import { FlatTree } from "../FlatTree.js";
+import { Path, PathsMap } from "./types.js";
 
 export default function flattenPathsMap(t: Tree, basePath: string = "", acc: PathsMap = new Map<Path, FlatTree>()): PathsMap {
   const flatNode = flattenNode(t, basePath);

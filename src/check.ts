@@ -1,8 +1,8 @@
 import chalk from "chalk";
-import path from "path";
-import { ConfigWithOut } from "./Config";
-import { checkIntegrityISO } from "./iso";
-import { Type } from "./type";
+import path from "node:path";
+import { ConfigWithOut } from "./Config.js";
+import { checkIntegrityISO } from "./iso/index.js";
+import { Type } from "./type.js";
 
 // eslint-disable-next-line import/prefer-default-export
 export function checkAfter( { type, input, outFolder, outName }: ConfigWithOut) {

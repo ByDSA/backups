@@ -1,5 +1,5 @@
-import { basename } from "path";
-import { getDateTimestamp } from "../timestamp";
+import { basename } from "node:path";
+import { getDateTimestamp } from "../timestamp.js";
 
 type Params = { input: string; outFolder?: string };
 export function calculateOutputISOFileName( { input }: Params) {
@@ -10,13 +10,13 @@ export function calculateOutputISOFileName( { input }: Params) {
 
 export {
   default as checkIntegrityISO,
-} from "./integrity";
+} from "./integrity.js";
 
 export {
   default as makeISO,
-} from "./make";
+} from "./make.js";
 
 export {
   isMountPoint, default as mountISO,
   umount as umountISO,
-} from "./mount";
+} from "./mount.js";

@@ -1,5 +1,5 @@
-import crypto from "crypto";
-import { DefaultHashAlgorithm, SupportedAlgorithms } from "./settings";
+import crypto from "node:crypto";
+import { DefaultHashAlgorithm, SupportedAlgorithms } from "./settings.js";
 
 export const hashString = (str: string, options = {
   algorithm: DefaultHashAlgorithm,
@@ -23,4 +23,4 @@ export const hashObject = (obj: any, options: any) => {
 
 export {
   hashFileStream,
-} from "./hashFileStream";
+} from "./hashFileStream.js";

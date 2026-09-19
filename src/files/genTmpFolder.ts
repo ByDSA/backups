@@ -1,5 +1,5 @@
-import { existsSync, mkdirSync } from "fs";
-import path from "path";
+import { existsSync, mkdirSync } from "node:fs";
+import path from "node:path";
 
 export default function genTmpFolder(location: string, nameBase?: string): string {
   // eslint-disable-next-line no-param-reassign

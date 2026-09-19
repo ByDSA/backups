@@ -27,12 +27,11 @@ function isTreeNormal(tree: TreeWithoutChildren): tree is TreeNormal {
   return "hash" in tree;
 }
 
-export default Tree;
-
 export {
-  TreeWithoutChildren,
-  BaseTreeWithoutChildren,
-  TreeNormal,
+  type Tree,
+  type TreeWithoutChildren,
+  type BaseTreeWithoutChildren,
+  type TreeNormal,
   isTreeNormal,
   isTreeSymlink,
 };

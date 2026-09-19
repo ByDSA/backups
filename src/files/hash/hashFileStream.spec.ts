@@ -1,8 +1,8 @@
 import { testsTmpDir } from "#tests/index";
-import { writeFileSync } from "fs";
-import path from "path";
+import { writeFileSync } from "node:fs";
+import path from "node:path";
 import sha256File from "sha256-file";
-import { hashFileStream } from "./hashFileStream";
+import { hashFileStream } from "./hashFileStream.js";
 
 describe("all", () => {
   const fullFilePath = path.resolve(testsTmpDir(), "file");

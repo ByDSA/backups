@@ -1,7 +1,7 @@
-import Tree, { isTreeSymlink } from "../../Tree";
-import flattenNode from "../flattenNode";
-import FlatTree from "../FlatTree";
-import { Hash, HashesMap } from "./types";
+import { type Tree, isTreeSymlink } from "../../Tree.js";
+import flattenNode from "../flattenNode.js";
+import type { FlatTree } from "../FlatTree.js";
+import type { Hash, HashesMap } from "./types.js";
 
 export default function flattenHashesMap(t: Tree, basePath: string = "", acc: HashesMap = new Map<Hash, FlatTree[]>()): HashesMap {
   const flatTree = flattenNode(t, basePath);

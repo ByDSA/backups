@@ -1,7 +1,5 @@
-import { TreeWithoutChildren } from "../Tree";
+import type { TreeWithoutChildren } from "../Tree.js";
 
-type FlatTree = TreeWithoutChildren & {
+export type FlatTree = TreeWithoutChildren & {
   path: string;
 };
-
-export default FlatTree;

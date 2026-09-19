@@ -1,5 +1,5 @@
-import Tree from "../Tree";
-import FlatTree from "./FlatTree";
+import type { Tree } from "../Tree.js";
+import type { FlatTree } from "./FlatTree.js";
 
 export default function flattenNode(t: Tree, basePath: string = ""): FlatTree {
   const path = `${basePath}/${t.name}`;

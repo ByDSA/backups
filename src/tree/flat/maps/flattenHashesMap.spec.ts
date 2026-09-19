@@ -1,9 +1,9 @@
 import { N1, N1DUP, R1_CHILDREN_N1_N1DUP } from "#tests/trees";
 // eslint-disable-next-line import/no-internal-modules
-import { TreeNormal } from "~/tree/Tree";
-import flattenNode from "../flattenNode";
-import flattenHashesMap from "./flattenHashesMap";
-import { HashesMap } from "./types";
+import type { TreeNormal } from "#/tree/Tree";
+import flattenNode from "../flattenNode.js";
+import flattenHashesMap from "./flattenHashesMap.js";
+import { HashesMap } from "./types.js";
 
 it("one node", () => {
   const nodeWithoutChildrenFlat = flattenNode(N1);

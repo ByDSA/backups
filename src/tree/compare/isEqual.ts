@@ -1,6 +1,6 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import Tree, { isTreeNormal, isTreeSymlink } from "../Tree";
+import { type Tree, isTreeNormal, isTreeSymlink } from "../Tree.js";
 
 export type Options = {
   level: number;

@@ -1,20 +1,20 @@
-import Tree from "../Tree";
-import CompareTreeProcess from "./CompareTreeProcess";
-import Options from "./Options";
-import Difference from "./types/Difference";
+import type { Tree } from "../Tree.js";
+import CompareTreeProcess from "./CompareTreeProcess.js";
+import type { Options } from "./Options.js";
+import type { Difference } from "./types/Difference.js";
 
 export {
   default as Mime,
   getMimeType,
-} from "./MimeType";
+} from "./MimeType.js";
 
 export {
   default as isEqual,
-} from "./isEqual";
+} from "./isEqual.js";
 
 export {
-  default as Difference,
-} from "./types/Difference";
+  type Difference,
+};
 
 export default function compareTree(
   previousTree: Tree,

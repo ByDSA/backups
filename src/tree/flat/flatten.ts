@@ -1,5 +1,5 @@
-import Tree from "../Tree";
-import FlatTree from "./FlatTree";
+import type { Tree } from "../Tree.js";
+import { FlatTree } from "./FlatTree.js";
 
 export default function flatten(t: Tree, basePath: string = "", acc: FlatTree[] = []): FlatTree[] {
   if (!t.children)

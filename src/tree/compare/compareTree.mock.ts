@@ -1,5 +1,5 @@
-import { N1, N1DUP, N2, R1 } from "#tests/trees";
-import Tree from "../Tree";
+import { N1, N1DUP, N2, R1 } from "#tests/trees/index.js";
+import type { Tree } from "../Tree.js";
 
 export const TREE_COMPARE1_BASE: Tree = Object.freeze( {
   ...R1,

@@ -1,14 +1,14 @@
 import chalk from "chalk";
-import yargs, { Arguments } from "yargs";
-import { compareTree, readTree, Tree } from "~/tree";
-import { Difference } from "~/tree/compare/types";
-import { getTreeAt } from "~/tree/findTree/utils";
+import {Argv, Arguments } from "yargs";
+import { compareTree, readTree, type Tree } from "#/tree/index.js";
+import type { Difference } from "#/tree/compare/types/index.js";
+import { getTreeAt } from "#/tree/findTree/utils.js";
 
-export default function command() {
-  return yargs.command("compare [input1] [input2]", "Tree comparator", builder, handler);
+export default function command(cli: Argv) {
+  return cli.command("compare [input1] [input2]", "Tree comparator", builder, handler);
 }
 
-function builder(y: yargs.Argv<{}>) {
+function builder(y: Argv<{}>) {
   y.positional("input1", {
     type: "string",
     describe: "Input tree file",

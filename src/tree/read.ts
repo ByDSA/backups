@@ -1,6 +1,6 @@
-import { existsSync, readFileSync, statSync } from "fs";
-import isTree from "./isTree";
-import Tree from "./Tree";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import isTree from "./isTree.js";
+import type { Tree } from "./Tree.js";
 
 const malformedError = new Error("The tree file is malformed");
 const fileNotExistsError = (f: string) => new Error(`File '${f}' doesn't exist`);

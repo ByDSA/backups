@@ -1,7 +1,8 @@
-import findTreeAsync from "./findTree";
-import Options from "./findTree/types/Options";
-import saveTree from "./save";
-import Tree from "./Tree";
+// eslint-disable-next-line import/no-internal-modules
+import findTreeAsync from "./findTree/index.js";
+import type { Options } from "./findTree/types/Options.js";
+import saveTree from "./save.js";
+import type { Tree } from "./Tree.js";
 
 type Opts = Options & {
   folder: string;

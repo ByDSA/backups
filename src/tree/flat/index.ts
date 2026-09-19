@@ -1,16 +1,17 @@
 export {
   default as flattenTree,
-} from "./flatten";
+} from "./flatten.js";
 
 export {
   default as flattenTreeNode,
-} from "./flattenNode";
+} from "./flattenNode.js";
 
 export {
-  default as FlatTree,
-} from "./FlatTree";
+  type FlatTree,
+} from "./FlatTree.js";
 
 export {
   flattenHashesMap,
   flattenPathsMap,
-} from "./maps";
+// eslint-disable-next-line import/no-internal-modules
+} from "./maps/index.js";

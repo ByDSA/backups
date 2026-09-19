@@ -1,15 +1,14 @@
-import Difference from "./types/Difference";
-import { show } from "./utils";
+import type { Difference } from "./types/Difference.js";
+import { show } from "./utils.js";
 
 type DifferenceCallBack = (difference: Difference)=> void;
 type Filter = (difference: Difference)=> boolean;
 
-type Options = {
+export type Options = {
   onDifference?: DifferenceCallBack;
   filter?: Filter;
 };
+
 export const DEFAULT_OPTIONS: Options = {
   onDifference: show,
 };
-
-export default Options;

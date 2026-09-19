@@ -1,4 +1,4 @@
-import FlatTree from "../FlatTree";
+import { FlatTree } from "../FlatTree.js";
 
 export type Hash = string;
 

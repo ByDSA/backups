@@ -1,11 +1,11 @@
-import { Dirent, lstatSync, readdirSync } from "fs";
-import { basename, dirname, resolve } from "path";
-import { rm } from "~/files";
-import { mountISO, umountISO } from "~/iso";
-import Tree from "../Tree";
-import { calculateHashOfBranches as calculateHashOfChildren, calculateSizeOfBranches as calculateSizeOfChildren } from "../branches";
-import Options, { DEFAULT as DEFAULT_OPTIONS } from "./types/Options";
-import { checkFolderOrFileIsValid, getTreeAt, getTreeBesideAt, getTreeFromNormalFileAsync, getTreeFromSymlink as getTreeFromSymlinkAsync, isISOFile, isPathInMountedDevice } from "./utils";
+import { Dirent, lstatSync, readdirSync } from "node:fs";
+import { basename, dirname, resolve } from "node:path";
+import { rm } from "#/files/index.js";
+import { mountISO, umountISO } from "#/iso/index.js";
+import type { Tree } from "../Tree.js";
+import { calculateHashOfBranches as calculateHashOfChildren, calculateSizeOfBranches as calculateSizeOfChildren } from "../branches.js";
+import { type Options, DEFAULT as DEFAULT_OPTIONS } from "./types/Options.js";
+import { checkFolderOrFileIsValid, getTreeAt, getTreeBesideAt, getTreeFromNormalFileAsync, getTreeFromSymlink as getTreeFromSymlinkAsync, isISOFile, isPathInMountedDevice } from "./utils.js";
 
 export default class FindTreeProcess {
   private opts: Options;

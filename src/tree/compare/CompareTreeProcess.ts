@@ -1,11 +1,13 @@
-import { dirname } from "path";
-import Tree, { isTreeSymlink } from "../Tree";
-import { flattenHashesMap, flattenPathsMap } from "../flat";
-import { HashesMap, PathsMap } from "../flat/maps/types";
-import { toPathsMap } from "../maps";
-import Options, { DEFAULT_OPTIONS } from "./Options";
-import Difference from "./types/Difference";
-import { genIsFolderObj, ignoreListContains } from "./utils";
+/* eslint-disable import/no-internal-modules */
+import { dirname } from "node:path";
+import { type Tree, isTreeSymlink } from "../Tree.js";
+import { flattenHashesMap, flattenPathsMap } from "../flat/index.js";
+// eslint-disable-next-line import/no-internal-modules
+import type { HashesMap, PathsMap } from "../flat/maps/types.js";
+import { toPathsMap } from "../maps/index.js";
+import { Options, DEFAULT_OPTIONS } from "./Options.js";
+import type { Difference } from "./types/Difference.js";
+import { genIsFolderObj, ignoreListContains } from "./utils.js";
 
 type ProcessFromDifferenceOpts = {
   from: string;

@@ -6,24 +6,23 @@
     "outDir": "./build",
     "sourceMap": true,
     "inlineSources": true,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "esModuleInterop": true,
     "importHelpers": true,
     "target": "es2015",
     "noImplicitAny": true,
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2022", "dom"],
-    "baseUrl": ".",
+    "types": ["node", "jest"],
+    "isolatedModules": true,
+    "rootDir": ".",
     "paths": {
-      "~/*": ["src/*"],
-      "#tests/*": ["tests/*"]
+      "#/*": ["./src/*"],
+      "#tests/*": ["./tests/*"]
     }
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"],
-  "typeRoots": ["../node_modules/@types"],
-  "exclude": ["node_modules"],
-  "types": ["node"]
+  "exclude": ["node_modules"]
 }

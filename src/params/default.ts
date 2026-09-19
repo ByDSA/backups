@@ -1,21 +1,21 @@
 import chalk from "chalk";
-import yargs, { Arguments } from "yargs";
-import { Config, ConfigWithOut } from "~/Config";
-import { checkAfter } from "~/check";
-import { Type } from "~/type";
-import { fetchPackageJson } from "~/utils/node";
-import { calculateOutputFileName, calculateOutputFolder, deleteBaseSource, makeBackupAsync, removePreviousIfNeeded } from "..";
-import { rm } from "../files";
+import { Argv, Arguments } from "yargs";
+import { Config, ConfigWithOut } from "#/Config.js";
+import { checkAfter } from "#/check.js";
+import { Type } from "#/type.js";
+import { fetchPackageJson } from "#/utils/node.js";
+import { calculateOutputFileName, calculateOutputFolder, deleteBaseSource, makeBackupAsync, removePreviousIfNeeded } from "../index.js";
+import { rm } from "../files/index.js";
 
-export default function command() {
-  yargs.command("$0 [input]", `Backup ${version()}`, builder, handler)
+export default function command(cli: Argv) {
+  cli.command("$0 [input]", `Backup ${version()}`, builder, handler)
     .help()
     .alias("h", "help");
 
-  return yargs;
+  return cli;
 }
 
-function builder(y: yargs.Argv<{}>) {
+function builder(y: Argv<{}>) {
   versionParam(y);
   optionParams(y);
   y.positional("input", {
@@ -87,7 +87,7 @@ async function handler<U>(argv: Arguments<U>) {
   }
 }
 
-function versionParam(y: yargs.Argv<{}>) {
+function versionParam(y: Argv<{}>) {
   y
     .alias("v", "version")
     .version(version());
@@ -108,7 +108,7 @@ function version() {
   return _v;
 }
 
-function optionParams(y: yargs.Argv<{}>) {
+function optionParams(y: Argv<{}>) {
   y.option("force", {
     alias: "f",
     boolean: true,

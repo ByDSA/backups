@@ -1,10 +1,10 @@
 import chalk from "chalk";
-import path, { dirname } from "path";
-import { Config, ConfigWithOut } from "./Config";
-import { rm } from "./files";
-import { calculateOutputISOFileName, makeISO } from "./iso";
-import { generateTree } from "./tree";
-import { Type } from "./type";
+import path, { dirname } from "node:path";
+import type { Config, ConfigWithOut } from "./Config.js";
+import { rm } from "./files/index.js";
+import { calculateOutputISOFileName, makeISO } from "./iso/index.js";
+import { generateTree } from "./tree/index.js";
+import { Type } from "./type.js";
 
 export function calculateOutputFileName( { outFolder,
   input,
@@ -68,12 +68,12 @@ export function deleteBaseSource( { input }: Config) {
 
 export {
   checkAfter,
-} from "./check";
+} from "./check.js";
 
 export {
   cmd, forceSudo,
-} from "./cmd";
+} from "./cmd.js";
 
 export {
   default as processParams,
-} from "./params";
+} from "./params/index.js";

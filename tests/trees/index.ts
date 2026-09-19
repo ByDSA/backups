@@ -1,6 +1,6 @@
-import { Tree } from "~/tree";
+import type { Tree } from "#/tree/index.js";
 
-export * from "./mocks";
+export * from "./mocks/index.js";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function removeChildren( { children, ...obj }: Tree) {

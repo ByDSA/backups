@@ -1,11 +1,12 @@
-import FilesMock from "#tests/FilesMock";
+/* eslint-disable import/no-internal-modules */
+import { FilesMock } from "#tests/FilesMock";
 import { treeDir } from "#tests/index";
 import mockGen from "#tests/trees/mocks/files1";
-import path from "path";
+import path from "node:path";
 import { readTree } from ".";
-import { isEqual } from "./compare";
-import findTreeAsync from "./findTree";
-import generateTree from "./generate";
+import { isEqual } from "./compare/index.js";
+import findTreeAsync from "./findTree/index.js";
+import generateTree from "./generate.js";
 
 describe("all", () => {
   let mock1: FilesMock;

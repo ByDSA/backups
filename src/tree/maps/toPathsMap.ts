@@ -1,4 +1,4 @@
-import Tree from "../Tree";
+import type { Tree } from "../Tree.js";
 
 type Path = string;
 type PathsMap = Map<Path, Tree>;

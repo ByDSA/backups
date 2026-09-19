@@ -5,9 +5,10 @@ on:
     branches:
       - main
       - master
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
@@ -15,79 +16,57 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Extraer nombre de la rama actual
-        shell: bash
-        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
-        id: current_branch
-
-      - name: "Checkout"
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          ref: ${{ steps.current_branch.outputs.branch }}
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
-
-      - name: Instalar pnpm
-        uses: pnpm/action-setup@v2
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version: "22"
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: "GitHub config"
+      - name: GitHub config
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "<>"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: "Obtener último commit de release"
+      - name: Obtener último commit de release
         id: last_release_commit
         run: |
           commit_release_title="chore(release):"
           echo "Filtro: \"$commit_release_title\""
 
-          last_release_commit=$(git log --pretty=format:"%h%x09%s" | grep "$commit_release_title" | head -1 | awk '{print $1;}')
+          last_release_commit=$(git log --pretty=format:"%h%x09%s" | grep -m 1 "$commit_release_title" | awk '{print $1;}')
 
           echo "LAST_RELEASE_COMMIT=$last_release_commit" >> $GITHUB_ENV
 
-      - name: "Comprobar si es la primera release"
+      - name: Comprobar si es la primera release
         id: first_release
         run: |
-          [[ -z "${{ env.LAST_RELEASE_COMMIT }}" ]] && first_release=1 || first_release=0
-
-          if [ $first_release -eq 1 ]; then
+          if [[ -z "${{ env.LAST_RELEASE_COMMIT }}" ]]; then
             echo "No se ha encontrado ningún commit de release. Se considera que es la primera release."
+            echo "first_release=1" >> $GITHUB_OUTPUT
+          else
+            echo "first_release=0" >> $GITHUB_OUTPUT
           fi
 
-          echo "first_release=$first_release" >> $GITHUB_OUTPUT
+      - name: Bumping [Primer release]
+        if: steps.first_release.outputs.first_release == '1'
+        run: pnpm run version:release --first-release --no-verify
 
-      - name: "Bumping [Primer release]"
-        if: steps.first_release.outputs.first_release == 1
-        run: |
-          pnpm run version:release --first-release --no-verify
-
-      - name: "Bumping [Release normal]"
-        if: steps.first_release.outputs.first_release == 0
+      - name: Bumping [Release normal]
+        if: steps.first_release.outputs.first_release == '0'
         run: |
           echo "Último commit de release: ${{ env.LAST_RELEASE_COMMIT }}"
 
@@ -100,7 +79,7 @@ jobs:
           bumping_messages=$(echo "$commits" | grep -E "$filter" | xargs)
 
           if [ -n "$bumping_messages" ]; then
-            echo "\nCommits nuevos a considerar para el bumping:"
+            echo -e "\nCommits nuevos a considerar para el bumping:"
             echo "$bumping_messages"
 
             pnpm run version:release --no-verify
@@ -108,10 +87,10 @@ jobs:
             echo "No se ha encontrado ningún commit nuevo que requiera bumping."
           fi
 
-      - name: "Subir cambios a GitHub"
+      - name: Subir cambios a GitHub
         run: |
           if [[ $(git log --branches --not --remotes) ]]; then
-            git push --no-verify --follow-tags origin ${{ steps.current_branch.outputs.branch }}
+            git push --no-verify --follow-tags origin ${{ github.ref_name }}
           else
             echo "No ha habido ningún cambio en el proyecto en el proceso de bumping."
             echo "No se ha subido ningún cambio a GitHub."

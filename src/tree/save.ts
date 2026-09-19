@@ -1,8 +1,8 @@
-import { readFileSync, writeFileSync } from "fs";
-import { join } from "path";
-import Tree from "./Tree";
+import { readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import type { Tree } from "./Tree.js";
 
-const packageJson = JSON.parse(readFileSync(join(__dirname, "..", "..", "package.json")).toString());
+const packageJson = JSON.parse(readFileSync(join(import.meta.dirname, "..", "..", "package.json")).toString());
 const VERSION = packageJson.version;
 
 export default function saveTree(tree: Tree, p: string) {

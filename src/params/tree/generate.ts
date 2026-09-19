@@ -1,13 +1,13 @@
 import chalk from "chalk";
-import path, { basename, dirname } from "path";
-import yargs, { Arguments } from "yargs";
-import { generateTree } from "~/tree";
+import path, { basename, dirname } from "node:path";
+import { Argv, Arguments } from "yargs";
+import { generateTree } from "#/tree/index.js";
 
-export default function command() {
-  return yargs.command("gen [input]", "Tree generator", builder, handler);
+export default function command(cli: Argv) {
+  return cli.command("gen [input]", "Tree generator", builder, handler);
 }
 
-function builder(y: yargs.Argv<{}>) {
+function builder(y: Argv<{}>) {
   y.positional("input", {
     type: "string",
     describe: "Input file or folder",

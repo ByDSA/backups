@@ -1,5 +1,5 @@
-import { calculateHashOfBranches, calculateSizeOfBranches } from "./branches";
-import Tree from "./Tree";
+import { calculateHashOfBranches, calculateSizeOfBranches } from "./branches.js";
+import type { Tree } from "./Tree.js";
 
 export default function joinTrees(name: string, ...trees: Tree[]): Tree {
   const joinedTree: Tree = {

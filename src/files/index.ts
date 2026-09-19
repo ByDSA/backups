@@ -1,4 +1,4 @@
-import { cmd } from "../cmd";
+import { cmd } from "../cmd.js";
 
 export function isEqualDir(d1: string, d2: string) {
   try {
@@ -26,8 +26,8 @@ export function rm(p: string) {
 
 export {
   default as genTmpFolder,
-} from "./genTmpFolder";
+} from "./genTmpFolder.js";
 
 export {
   hashFileStream,
-} from "./hash";
+} from "./hash/index.js";

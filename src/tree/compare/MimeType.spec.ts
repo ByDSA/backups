@@ -1,8 +1,8 @@
-import FilesMock from "#tests/FilesMock";
+import { FilesMock } from "#tests/FilesMock";
 import { treeDir } from "#tests/index";
 import { genFileMimeMock } from "#tests/trees";
-import path from "path";
-import Mime, { getMimeType } from "./MimeType";
+import path from "node:path";
+import Mime, { getMimeType } from "./MimeType.js";
 
 describe("all", () => {
   let DIR_BASE: string;

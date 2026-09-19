@@ -1,11 +1,10 @@
-import { Stats, existsSync, lstatSync, realpathSync } from "fs";
-import path, { basename, dirname } from "path";
+import { Stats, existsSync, lstatSync, realpathSync } from "node:fs";
+import path, { basename, dirname } from "node:path";
 import sha256File from "sha256-file";
-import { hashFileStream } from "~/files";
-import { isMountPoint } from "~/iso";
-import { Tree } from "..";
-import { BaseTreeWithoutChildren } from "../Tree";
-import readTree from "../read";
+import { hashFileStream } from "#/files/index.js";
+import { isMountPoint } from "#/iso/index.js";
+import type { Tree, BaseTreeWithoutChildren } from "../Tree.js";
+import readTree from "../read.js";
 
 export function checkFolderOrFileIsValid(folder: string) {
   let stat;

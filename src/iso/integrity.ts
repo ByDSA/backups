@@ -1,6 +1,6 @@
 import chalk from "chalk";
-import { isEqualDir, rm } from "~/files";
-import mount, { umount } from "./mount";
+import { isEqualDir, rm } from "#/files/index.js";
+import mount, { umount } from "./mount.js";
 
 export default function integrity(inputFolder: string, outputISO: string) {
   const tmp = mount(outputISO);

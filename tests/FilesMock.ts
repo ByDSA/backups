@@ -1,7 +1,7 @@
-import fs from "fs";
-import { dirname } from "path";
+import fs from "node:fs";
+import { dirname } from "node:path";
 import { utimes } from "utimes";
-import FileNode from "./FileNode";
+import { FileNode } from "./FileNode.js";
 
 export enum MockStatus {
   READY, CREATED, DELETED,
@@ -12,7 +12,7 @@ export type MockConfig = {
   files: FileNode[];
 };
 
-export default class FilesMock {
+export class FilesMock {
   private _status: MockStatus;
 
   constructor(protected config: MockConfig) {
@@ -75,8 +75,9 @@ export default class FilesMock {
 
   private $deleteIfExists() {
     try {
-      fs.rmdirSync(this.config.basePath, {
+      fs.rmSync(this.config.basePath, {
         recursive: true,
+        force: true,
       } );
     } catch (e: any) {
       if (e.code !== "ENOENT")

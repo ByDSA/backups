@@ -1,12 +1,12 @@
 import chalk from "chalk";
-import yargs, { Arguments } from "yargs";
-import { findDuplicates, readTree } from "~/tree";
+import { Argv, Arguments } from "yargs";
+import { findDuplicates, readTree } from "#/tree/index.js";
 
-export default function command() {
-  return yargs.command("dup [input]", "Tree find duplicates", builder, handler);
+export default function command(cli: Argv) {
+  return cli.command("dup [input]", "Tree find duplicates", builder, handler);
 }
 
-function builder(y: yargs.Argv<{}>) {
+function builder(y: Argv<{}>) {
   y.positional("input", {
     type: "string",
     describe: "Input tree file",
@@ -61,7 +61,7 @@ function handler<U>(argv: Arguments<U>) {
   }
 }
 
-function optionParams(y: yargs.Argv<{}>) {
+function optionParams(y: Argv<{}>) {
   y.option("considerFolders", {
     alias: "f",
     boolean: true,

@@ -1,21 +1,21 @@
 
 import chalk from "chalk";
-import yargs, { Arguments } from "yargs";
-import compareCmd from "./compare";
-import duplicatesCmd from "./duplicates";
-import generateCmd from "./generate";
-import joinCmd from "./join";
+import { Argv, Arguments } from "yargs";
+import compareCmd from "./compare.js";
+import duplicatesCmd from "./duplicates.js";
+import generateCmd from "./generate.js";
+import joinCmd from "./join.js";
 
-export default function command() {
-  return yargs.command("tree", "Tree", builder, handler);
+export default function command(cli: Argv) {
+  return cli.command("tree", "Tree", builder, handler);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function builder(y: yargs.Argv<{}>) {
-  generateCmd();
-  compareCmd();
-  duplicatesCmd();
-  joinCmd();
+function builder(y: Argv<{}>) {
+  generateCmd(y);
+  compareCmd(y);
+  duplicatesCmd(y);
+  joinCmd(y);
 }
 
 function handler<U>(argv: Arguments<U>) {

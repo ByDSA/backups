@@ -1,6 +1,6 @@
-import crypto from "crypto";
-import { createReadStream } from "fs";
-import { DefaultHashAlgorithm, SupportedAlgorithms } from "./settings";
+import crypto from "node:crypto";
+import { createReadStream } from "node:fs";
+import { DefaultHashAlgorithm, SupportedAlgorithms } from "./settings.js";
 
 // eslint-disable-next-line import/prefer-default-export
 export function hashFileStream(fullFilePath: string, options = {

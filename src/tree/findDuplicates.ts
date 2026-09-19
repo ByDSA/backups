@@ -1,5 +1,6 @@
-import { flattenTree, FlatTree } from "./flat";
-import Tree, { isTreeNormal, isTreeSymlink } from "./Tree";
+// eslint-disable-next-line import/no-internal-modules
+import { flattenTree, type FlatTree } from "./flat/index.js";
+import { type Tree, isTreeNormal, isTreeSymlink } from "./Tree.js";
 
 type Options = {
   consider?: {

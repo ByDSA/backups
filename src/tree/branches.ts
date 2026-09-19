@@ -1,5 +1,6 @@
 import crypto from "crypto";
-import Tree, { TreeNormal, isTreeNormal } from "./Tree";
+import type { Tree, TreeNormal } from "./Tree.js";
+import { isTreeNormal } from "./Tree.js";
 
 export function calculateSizeOfBranches(branches: Tree[]) {
   let size = 0;

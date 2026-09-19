@@ -1,8 +1,8 @@
 import { mkTmpDir, testsTmpDir } from "#tests/index";
-import { existsSync } from "fs";
-import path from "path";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { rm } from ".";
-import genTmpFolder from "./genTmpFolder";
+import genTmpFolder from "./genTmpFolder.js";
 
 const TESTS_DIR = testsTmpDir();
 

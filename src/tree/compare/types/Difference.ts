@@ -1,4 +1,4 @@
-import Tree from "../../Tree";
+import type { Tree } from "../../Tree.js";
 
 type From = {
   from: string;
@@ -18,7 +18,7 @@ type All = {
   type: string;
 };
 
-type Difference = All
+export type Difference = All
 & (From & {
   type: "deleted";
 } | FromTo & {
@@ -29,6 +29,4 @@ type Difference = All
   type: "created";
 } | To & Treeable & {
   type: "updated";
-} ) ;
-
-export default Difference;
+} );

@@ -1,8 +1,8 @@
 import chalk from "chalk";
-import { existsSync } from "fs";
-import { basename, dirname } from "path";
-import { cmd } from "~/cmd";
-import { genTmpFolder, rm } from "~/files";
+import { existsSync } from "node:fs";
+import { basename, dirname } from "node:path";
+import { cmd } from "#/cmd.js";
+import { genTmpFolder, rm } from "#/files/index.js";
 
 type Options = {
   folder?: string;
@@ -14,6 +14,9 @@ export default function mount(isoFullpath: string, opts?: Options): string {
 
   if (!folder)
     folder = genTmpFolder(baseFolder, ISOwithoutExt(basename(isoFullpath)));
+
+  if (!folder)
+    throw new Error("never");
 
   console.log(chalk.blue(`Mounting ${isoFullpath} in ${folder}`));
 

@@ -1,4 +1,4 @@
-import { Type } from "./type";
+import type { Type } from "./type.js";
 
 export type Config = {
   input: string;
