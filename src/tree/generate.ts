@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-internal-modules
+import { rmSync } from "node:fs";
 import findTreeAsync from "./findTree/index.js";
 import type { Options } from "./findTree/types/Options.js";
 import saveTree from "./save.js";
@@ -10,6 +11,9 @@ type Opts = Options & {
 };
 
 export default async function generateTree(opts: Opts): Promise<Tree> {
+  rmSync(opts.out, {
+    force: true,
+  });
   const tree = await findTreeAsync(opts.folder, opts);
 
   saveTree(tree, opts.out);
