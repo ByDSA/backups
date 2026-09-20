@@ -19,7 +19,7 @@
     "isolatedModules": true,
     "rootDir": ".",
     "paths": {
-      "#/*": ["./src/*"],
+      "#src/*": ["./src/*"],
       "#tests/*": ["./tests/*"]
     }
   },

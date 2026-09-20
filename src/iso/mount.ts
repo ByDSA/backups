@@ -1,8 +1,8 @@
 import chalk from "chalk";
 import { existsSync } from "node:fs";
 import { basename, dirname } from "node:path";
-import { cmd } from "#/cmd.js";
-import { genTmpFolder, rm } from "#/files/index.js";
+import { cmd } from "#src/cmd.js";
+import { genTmpFolder, rm } from "#src/files/index.js";
 
 type Options = {
   folder?: string;

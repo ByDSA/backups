@@ -1,6 +1,6 @@
 import { N1, N1DUP, R1_CHILDREN_N1_N1DUP } from "#tests/trees";
 // eslint-disable-next-line import/no-internal-modules
-import type { TreeNormal } from "#/tree/Tree";
+import type { TreeNormal } from "#src/tree/Tree";
 import flattenNode from "../flattenNode.js";
 import flattenHashesMap from "./flattenHashesMap.js";
 import { HashesMap } from "./types.js";

@@ -1,8 +1,8 @@
 import { Stats, existsSync, lstatSync, realpathSync } from "node:fs";
 import path, { basename, dirname } from "node:path";
 import sha256File from "sha256-file";
-import { hashFileStream } from "#/files/index.js";
-import { isMountPoint } from "#/iso/index.js";
+import { hashFileStream } from "#src/files/index.js";
+import { isMountPoint } from "#src/iso/index.js";
 import type { Tree, BaseTreeWithoutChildren } from "../Tree.js";
 import readTree from "../read.js";
 

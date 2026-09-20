@@ -1,4 +1,4 @@
-import type { Tree } from "#/tree/index.js";
+import type { Tree } from "#src/tree/index.js";
 
 export * from "./mocks/index.js";
 

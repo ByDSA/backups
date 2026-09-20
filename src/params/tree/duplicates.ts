@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { Argv, Arguments } from "yargs";
-import { findDuplicates, readTree } from "#/tree/index.js";
+import { findDuplicates, readTree } from "#src/tree/index.js";
 
 export default function command(cli: Argv) {
   return cli.command("dup [input]", "Tree find duplicates", builder, handler);

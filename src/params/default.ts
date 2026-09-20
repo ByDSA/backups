@@ -1,9 +1,9 @@
 import chalk from "chalk";
 import { Argv, Arguments } from "yargs";
-import { Config, ConfigWithOut } from "#/Config.js";
-import { checkAfter } from "#/check.js";
-import { Type } from "#/type.js";
-import { fetchPackageJson } from "#/utils/node.js";
+import { Config, ConfigWithOut } from "#src/Config.js";
+import { checkAfter } from "#src/check.js";
+import { Type } from "#src/type.js";
+import { fetchPackageJson } from "#src/utils/node.js";
 import { calculateOutputFileName, calculateOutputFolder, deleteBaseSource, makeBackupAsync, removePreviousIfNeeded } from "../index.js";
 import { rm } from "../files/index.js";
 

@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import path, { basename, dirname } from "node:path";
 import { Argv, Arguments } from "yargs";
-import { generateTree } from "#/tree/index.js";
+import { generateTree } from "#src/tree/index.js";
 
 export default function command(cli: Argv) {
   return cli.command("gen [input]", "Tree generator", builder, handler);

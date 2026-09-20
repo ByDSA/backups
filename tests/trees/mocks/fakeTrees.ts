@@ -1,6 +1,6 @@
-import { type Tree, calculateSizeOfBranches } from "#/tree/index.js";
+import { type Tree, calculateSizeOfBranches } from "#src/tree/index.js";
 // eslint-disable-next-line import/no-internal-modules
-import type { TreeNormal } from "#/tree/Tree.js";
+import type { TreeNormal } from "#src/tree/Tree.js";
 
 function createNode(n: number): TreeNormal {
   return Object.freeze( {

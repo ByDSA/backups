@@ -1,7 +1,7 @@
 import { Dirent, lstatSync, readdirSync } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
-import { rm } from "#/files/index.js";
-import { mountISO, umountISO } from "#/iso/index.js";
+import { rm } from "#src/files/index.js";
+import { mountISO, umountISO } from "#src/iso/index.js";
 import type { Tree } from "../Tree.js";
 import { calculateHashOfBranches as calculateHashOfChildren, calculateSizeOfBranches as calculateSizeOfChildren } from "../branches.js";
 import { type Options, DEFAULT as DEFAULT_OPTIONS } from "./types/Options.js";

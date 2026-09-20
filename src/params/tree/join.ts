@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { basename } from "node:path";
-import {Argv, Arguments } from "yargs";
-import { type Tree, joinTrees, readTree, saveTree } from "#/tree/index.js";
+import { Argv, Arguments } from "yargs";
+import { type Tree, joinTrees, readTree, saveTree } from "#src/tree/index.js";
 
 export default function command(cli: Argv) {
   return cli.command("join [input..]", "Tree comparator", builder, handler);

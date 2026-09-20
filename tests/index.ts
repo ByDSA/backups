@@ -1,6 +1,6 @@
 import { mkdirSync } from "node:fs";
 import { resolve } from "node:path";
-import getMainDir from "#/utils/node.js";
+import getMainDir from "#src/utils/node.js";
 
 export function treeDir() {
   return resolve(testsTmpDir(), "tree");

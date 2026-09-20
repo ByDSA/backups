@@ -20,8 +20,8 @@ const setupFilesAfterEnv = [
 ];
 const moduleNameMapper = {
   // 1. Quitar la extensión .js de los alias #/
-  "^#/(.*)\\.js$": "<rootDir>/src/$1",
-  "^#/(.*)$": "<rootDir>/src/$1",
+  "^#src/(.*)\\.js$": "<rootDir>/src/$1",
+  "^#src/(.*)$": "<rootDir>/src/$1",
 
   // 2. Quitar la extensión .js de los alias #tests/
   "^#tests/(.*)\\.js$": "<rootDir>/tests/$1",

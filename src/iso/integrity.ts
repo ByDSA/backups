@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { isEqualDir, rm } from "#/files/index.js";
+import { isEqualDir, rm } from "#src/files/index.js";
 import mount, { umount } from "./mount.js";
 
 export default function integrity(inputFolder: string, outputISO: string) {

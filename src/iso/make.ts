@@ -1,10 +1,10 @@
 import chalk from "chalk";
 import { existsSync } from "node:fs";
 import { basename } from "node:path";
-import { cmd } from "#/cmd.js";
-import type { Tree } from "#/tree/index.js";
+import { cmd } from "#src/cmd.js";
+import type { Tree } from "#src/tree/index.js";
 // eslint-disable-next-line import/no-internal-modules
-import { isTreeNormal } from "#/tree/Tree.js";
+import { isTreeNormal } from "#src/tree/Tree.js";
 
 type Options = {
   tree?: Tree;
