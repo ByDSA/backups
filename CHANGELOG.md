@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/ByDSA/backups/compare/v1.2.4...v1.3.0) (2026-09-20)
+
+
+### Features
+
+* iso with UDF ([af05eaa](https://github.com/ByDSA/backups/commit/af05eaa0cf6cb7ee4c9f4e4fbdc1caf6e9a95018))
+
+
+### Bug Fixes
+
+* path alias in ESM ([5071cbd](https://github.com/ByDSA/backups/commit/5071cbdfc3aeb9690cb66c50cb2fa7252b3c4fe9))
+
 ### [1.2.4](https://github.com/ByDSA/backups/compare/v1.2.3...v1.2.4) (2023-05-29)
 
 
